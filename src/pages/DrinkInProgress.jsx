@@ -3,7 +3,7 @@ import React from 'react';
 function DrinkInProgress() {
   return (
     <div>
-     <h1> DrinkInProgress </h1>
+      <h1> DrinkInProgress </h1>
     </div>
   );
 }

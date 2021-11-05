@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = ({ type, dataTestId, value, name, onChange }) => {
+const Input = ({ type, dataTestId, name, onChange }) => {
   return (
     <input
       type={ type }
       data-testId={ dataTestId }
       name={ name }
-			onChange={ onChange }
-			// value={ value }
+      onChange={ onChange }
     />
   );
 };
@@ -16,7 +15,6 @@ const Input = ({ type, dataTestId, value, name, onChange }) => {
 Input.defaultProps = {
   dataTestId: undefined,
   onChange: undefined,
-	value: undefined,
 };
 
 Input.propTypes = {
@@ -24,7 +22,6 @@ Input.propTypes = {
   dataTestId: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-	// value: PropTypes.string,
 };
 
 export default Input;
