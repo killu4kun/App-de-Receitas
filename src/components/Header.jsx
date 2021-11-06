@@ -1,10 +1,11 @@
 import React from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import '../css/header.css';
 
 function Header() {
   return (
-    <header>
+    <header className="header-container">
       <img
         src={ profileIcon }
         alt="Profile"

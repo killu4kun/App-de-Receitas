@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import RecipeContext from '../context/RecipeContext';
+import '../css/login.css';
 
 function Login() {
   const [userEmail, setEmail] = useState('');
@@ -18,14 +19,14 @@ function Login() {
   };
 
   const handleValidate = () => {
-    if (isEmailValid(userEmail) && password.length >= PASSWORD_LENGTH - 1) {
+    if (isEmailValid(userEmail) && password.length > PASSWORD_LENGTH - 1) {
       setValidate(true);
     }
   };
 
   const handleClick = () => {
     const email = {
-      userEmail,
+      email: userEmail,
     };
 
     localStorage.setItem('mealsToken', 1);
@@ -36,32 +37,33 @@ function Login() {
   };
 
   return (
-    <div>
-      <Input
-        type="email"
-        data-testId="email-input"
-        name="email"
-        onChange={ ({ target: { value } }) => {
-          handleValidate();
-          setEmail(value);
-        } }
-      />
-      <Input
-        type="password"
-        data-testId="password-input"
-        name="password"
-        onChange={ ({ target: { value } }) => {
-          handleValidate();
-          setPassword(value);
-        } }
-
-      />
-      <Button
-        text="Logar"
-        data-testId="button-input"
-        disabled={ !validate }
-        onClick={ () => handleClick() }
-      />
+    <div className="login-container">
+      <div className="login-box">
+        <Input
+          type="email"
+          dataTestId="email-input"
+          name="email"
+          onChange={ ({ target: { value } }) => {
+            handleValidate();
+            setEmail(value);
+          } }
+        />
+        <Input
+          type="password"
+          dataTestId="password-input"
+          name="password"
+          onChange={ ({ target: { value } }) => {
+            handleValidate();
+            setPassword(value);
+          } }
+        />
+        <Button
+          text="Logar"
+          dataTestId="login-submit-btn"
+          disabled={ !validate }
+          onClick={ () => handleClick() }
+        />
+      </div>
     </div>
   );
 }

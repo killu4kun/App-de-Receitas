@@ -5,7 +5,7 @@ const Button = ({ dataTestId, onClick, text, disabled }) => {
 	return (
 		<button
 			onClick={ onClick }
-			data-testis={ dataTestId }
+			data-testid={ dataTestId }
 			type="button"
 			disabled={ disabled }
 		>
