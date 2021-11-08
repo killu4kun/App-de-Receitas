@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import RecipeContext from '../context/RecipeContext';
 
 function SearchBar() {
+  const [ingredient, setIngredient] = useState('');
+  const [searchIngredients, setSearchIngredients] = useState([]);
+  const { pathname } = useLocation();
+  const locationName = pathname.slice(1);
+
+  // useEffect(() => {
+  //   switch() {
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //   }
+  // }, [ingredient]);
+
   return (
     <section>
-      <input placeholder="Buscar receita" data-testid="search-input" />
+      <input
+        placeholder="O que você deseja comer?"
+        data-testid="search-input"
+        onChange={ ({ target: { value } }) => setIngredient(value)}
+      />
       <label htmlFor="chosen-filter">
         <input
           name="chosen-filter"

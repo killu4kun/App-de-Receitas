@@ -7,8 +7,6 @@ import RecipeContext from '../context/RecipeContext';
 
 function Drinks() {
   const { drinksCategories, drinksIngredients } = useContext(RecipeContext);
-  console.log(drinksCategories);
-  console.log(drinksIngredients);
   return (
     <div>
       <Header title="Bebidas" showSearch />

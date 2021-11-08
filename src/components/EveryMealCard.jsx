@@ -4,5 +4,5 @@ import EachCard from './components/EachCard';
 
 function EveryMealCard() {
   const { meals: { meals } } =
-  
-}
+
+};

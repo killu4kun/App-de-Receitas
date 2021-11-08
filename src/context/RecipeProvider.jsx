@@ -9,6 +9,8 @@ import {
 } from '../services/recipesRequest';
 
 function RecipeProvider({ children }) {
+  const [mealsRecipes, setMealsRecipes ] = useState([]);
+  const [drinksRecipes, setDrinksRecipes ] = useState([]);
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
@@ -24,7 +26,12 @@ function RecipeProvider({ children }) {
     setDrinksIngredients(await getAllIngredientsDrinks());
   };
 
-  // didmount da massa
+  // const receiveRecipes = async () => {
+  //   setMealsRecipes(await );
+  //   setDrinksRecipes(await );
+  // };
+
+  // didMount da massa
   useEffect(() => {
     retrieveFoods();
     retrieveDrinks();
