@@ -23,6 +23,7 @@ function Header({ title, showSearch }) {
       <button
         type="button"
         style={ { visibility: !showSearch } }
+        onClick={ () => history.push('/explorar') }
       >
         <img
           src={ searchIcon }

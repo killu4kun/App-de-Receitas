@@ -5,7 +5,7 @@ const Input = ({ type, dataTestId, name, onChange }) => {
   return (
     <input
       type={ type }
-      data-testId={ dataTestId }
+      data-testid={ dataTestId }
       name={ name }
       onChange={ onChange }
     />
