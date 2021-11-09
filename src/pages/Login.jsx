@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import RecipeContext from '../context/RecipeContext';
+// import RecipeContext from '../context/RecipeContext';
 import '../css/login.css';
 
 function Login() {
