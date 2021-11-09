@@ -64,13 +64,13 @@ export const getImageIngredient = async (ingredientName) => {
 };
 
 export const getRecipeByIngredient = async (type, ingredientName) => {
-  if (type === 'drink') {
+  if (type === 'bebida') {
     const results = await fetch(SEARCH_FOR_INGREDIENT_COCKTAIL + ingredientName);
     const response = await results.json();
     return response.drinks;
   }
 
-  if (type === 'meal') {
+  if (type === 'comida') {
     const results = await fetch(SEARCH_FOR_INGREDIENT_MEAL + ingredientName);
     const response = await results.json();
     return response.meals;

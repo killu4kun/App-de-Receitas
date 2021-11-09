@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
+import { getRecipeByIngredient } from '../services/recipesRequest';
 
 function SearchBar() {
   const [ingredient, setIngredient] = useState('');
   const [searchIngredients, setSearchIngredients] = useState([]);
   const { pathname } = useLocation();
   const locationName = pathname.slice(1);
+
+  const retrieveSearchedRecipe = async () => {
+    setSearchIngredients(
+      await getRecipeByIngredient(
+        locationName,
+        ingredient,
+      ),
+    );
+  };
+
+  useEffect(() => {
+    retrieveSearchedRecipe();
+  }, []);
+  console.log(searchIngredients)
 
   // useEffect(() => {
   //   switch() {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -18,11 +18,14 @@ function Login() {
     return regexEmail.test(email);
   };
 
-  const handleValidate = () => {
-    if (isEmailValid(userEmail) && password.length > PASSWORD_LENGTH - 1) {
-      setValidate(true);
-    }
-  };
+  useEffect(() => {
+    const handleValidate = () => {
+      if (isEmailValid(userEmail) && password.length >= PASSWORD_LENGTH) {
+        setValidate(true);
+      }
+    };
+    handleValidate();
+  }, [userEmail, password]);
 
   const handleClick = () => {
     const email = {
@@ -43,19 +46,13 @@ function Login() {
           type="email"
           dataTestId="email-input"
           name="email"
-          onChange={ ({ target: { value } }) => {
-            handleValidate();
-            setEmail(value);
-          } }
+          onChange={ ({ target: { value } }) => setEmail(value) }
         />
         <Input
           type="password"
           dataTestId="password-input"
           name="password"
-          onChange={ ({ target: { value } }) => {
-            handleValidate();
-            setPassword(value);
-          } }
+          onChange={ ({ target: { value } }) => setPassword(value) }
         />
         <Button
           text="Logar"
