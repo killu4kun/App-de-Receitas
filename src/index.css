@@ -1,3 +1,6 @@
+@media screen and ( max-width : 360px ) {
+  
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +13,13 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button {
+  background-color: antiquewhite;
+}
+
+button:disabled {
+  background-color: rgb(209, 209, 209);
+  color: rgb(144, 144, 144);
 }
