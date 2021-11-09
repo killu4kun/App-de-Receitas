@@ -64,13 +64,13 @@ export const getImageIngredient = async (ingredientName) => {
 };
 
 export const getRecipeByIngredient = async (type, ingredientName) => {
-  if (type === 'bebida') {
+  if (type === 'bebidas') {
     const results = await fetch(SEARCH_FOR_INGREDIENT_COCKTAIL + ingredientName);
     const response = await results.json();
     return response.drinks;
   }
 
-  if (type === 'comida') {
+  if (type === 'comidas') {
     const results = await fetch(SEARCH_FOR_INGREDIENT_MEAL + ingredientName);
     const response = await results.json();
     return response.meals;
@@ -78,13 +78,13 @@ export const getRecipeByIngredient = async (type, ingredientName) => {
 };
 
 export const getRecipeByName = async (type, ingredientName) => {
-  if (type === 'drink') {
+  if (type === 'bebidas') {
     const results = await fetch(SEARCH_FOR_NAME_COCKTAIL + ingredientName);
     const response = await results.json();
     return response.drinks;
   }
 
-  if (type === 'meal') {
+  if (type === 'comidas') {
     const results = await fetch(SEARCH_FOR_NAME_MEAL + ingredientName);
     const response = await results.json();
     return response.meals;
@@ -92,13 +92,13 @@ export const getRecipeByName = async (type, ingredientName) => {
 };
 
 export const getRecipeByFirstLetter = async (type, ingredientName) => {
-  if (type === 'drink') {
+  if (type === 'bebidas') {
     const results = await fetch(SEARCH_FOR_FIRST_LETTER_COCKTAIL + ingredientName);
     const response = await results.json();
     return response.drinks;
   }
 
-  if (type === 'meal') {
+  if (type === 'comidas') {
     const results = await fetch(SEARCH_FOR_FIRST_LETTER_MEAL + ingredientName);
     const response = await results.json();
     return response.meals;
