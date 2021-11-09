@@ -41,7 +41,7 @@ function SearchBar() {
       <input
         placeholder="O que você deseja comer?"
         data-testid="search-input"
-        onChange={ ({ target: { value } }) => setIngredient(value)}
+        onChange={ ({ target: { value } }) => setIngredient(value) }
       />
       <label htmlFor="chosen-filter">
         <input
