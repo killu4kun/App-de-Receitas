@@ -6,9 +6,8 @@ import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
 
 function Food() {
-  const { foodsCategories, foodsIngredients } = useContext(RecipeContext);
-  console.log(foodsCategories);
-  console.log(foodsIngredients);
+  const { foodsCategories, foodsIngredients,
+    searchIngredients } = useContext(RecipeContext);
 
   return (
     <div>
