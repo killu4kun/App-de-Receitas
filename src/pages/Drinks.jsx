@@ -14,6 +14,8 @@ function Drinks() {
       <div className="drinks-container">
         <nav>
           <ul>
+          <Header />
+<Footer />
             {drinksCategories
               .map((drink, index) => Object.values(drink)
                 .map((value) => (<li key={ index }>{value}</li>)))}
