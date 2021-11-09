@@ -9,13 +9,21 @@ function Profile() {
   return (
     <div>
       <Header title="Perfil" showSearch={ false } />
-      <h1>
+      <h1 data-testid="profile-email">
         { email }
       </h1>
-      <button type="button" onClick={ () => history.push('/receitas-feitas') }>
+      <button
+        type="button"
+        data-testid="profile-done-btn"
+        onClick={ () => history.push('/receitas-feitas') }
+      >
         Receitas Feitas
       </button>
-      <button type="button" onClick={ () => history.push('/receitas-favoritas') }>
+      <button
+        type="button"
+        data-testid="profile-favorite-btn"
+        onClick={ () => history.push('/receitas-favoritas') }
+      >
         Receitas Favoritas
       </button>
       <button
