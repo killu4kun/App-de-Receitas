@@ -25,6 +25,29 @@ function RecipeProvider({ children }) {
     setDrinksCategories(await getAllCategoriesDrinks());
     setDrinksIngredients(await getAllIngredientsDrinks());
   };
+  
+  const shuffleArray = (array) => {
+    const arr = array;
+    for (let index = arr.length - 1; index > 0; index -= 1) {
+      const nextIndex = Math.floor(Math.random() * (index + 1));
+      const temp = arr[index];
+      arr[index] = arr[nextIndex];
+      arr[nextIndex] = temp;
+    }
+    return arr;
+  };
+
+  const randomFood = async () => {
+    let results = '';
+    if (foodsCategories.length !== 0) {
+      const foodsToShuffle = foodsCategories.map((food) => Object.values(food)[0]);
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${shuffleArray(foodsToShuffle)}`);
+      results = response.json();
+    }
+    return results.meals;
+  };
+
+  randomFood().then(e => console.log(e));
 
   // const receiveRecipes = async () => {
   //   setMealsRecipes(await );

@@ -20,9 +20,9 @@ function Header({ title, showSearch }) {
         />
       </button>
       <h1 data-testid="page-title">{ title }</h1>
-      <button
+      {showSearch
+      && <button
         type="button"
-        style={ { visibility: !showSearch } }
         onClick={ () => history.push('/explorar') }
       >
         <img
@@ -30,7 +30,7 @@ function Header({ title, showSearch }) {
           alt="Search"
           data-testid="search-top-btn"
         />
-      </button>
+         </button>}
     </header>
   );
 }

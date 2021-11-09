@@ -1,41 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { Redirect, useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
 import { getRecipeByIngredient } from '../services/recipesRequest';
+import Button from './Button';
 
 function SearchBar() {
   const [ingredient, setIngredient] = useState('');
   const [searchIngredients, setSearchIngredients] = useState([]);
+  const [radioSelected, setRadioSelected] = useState('');
   const { pathname } = useLocation();
   const locationName = pathname.slice(1);
 
-  const retrieveSearchedRecipe = async () => {
-    setSearchIngredients(
-      await getRecipeByIngredient(
-        locationName,
-        ingredient,
-      ),
-    );
+  useEffect(() => {
+    const retrieveSearchedRecipe = async () => {
+      setSearchIngredients(
+        await getRecipeByIngredient(
+          locationName,
+          ingredient,
+        ),
+      );
+    };
+
+    retrieveSearchedRecipe();
+  }, [ingredient, locationName]);
+  console.log(searchIngredients);
+
+  const handleChange = (value) => {
+    setRadioSelected(value);
   };
 
   useEffect(() => {
-    retrieveSearchedRecipe();
-  }, []);
-  console.log(searchIngredients)
+    switch (radioSelected) {
+    case 'ingredient':
+      break;
+    case 'name':
+      break;
+    case 'first-letter':
+      break;
+    default:
+      return 0;
+    }
+  }, [ingredient]);
 
-  // useEffect(() => {
-  //   switch() {
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //   }
-  // }, [ingredient]);
-
+  // searchRecipe.length === 1 && <Redirect to={`/${locationName}/${searchRecipe[0].idMeal}`}
+  console.log(radioSelected);
   return (
     <section>
       <input
@@ -43,7 +51,10 @@ function SearchBar() {
         data-testid="search-input"
         onChange={ ({ target: { value } }) => setIngredient(value) }
       />
-      <label htmlFor="chosen-filter">
+      <label
+        htmlFor="chosen-filter"
+        onChange={ ({ target: { value } }) => handleChange(value) }
+      >
         <input
           name="chosen-filter"
           type="radio"
@@ -69,6 +80,7 @@ function SearchBar() {
         />
         Primeira letra
       </label>
+      <Button text="Buscar" />
     </section>
   );
 }
