@@ -100,6 +100,7 @@ function RecipeProvider({ children }) {
     drinksCategories,
     drinksIngredients,
     searchIngredients,
+    mealsRecipes,
     handleClick,
     handleInputChange,
     handleRadioChange,

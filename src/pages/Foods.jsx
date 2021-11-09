@@ -6,8 +6,7 @@ import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
 
 function Food() {
-  const { foodsCategories, foodsIngredients,
-    searchIngredients } = useContext(RecipeContext);
+  const { searchIngredients, mealsRecipes } = useContext(RecipeContext);
 
   return (
     <div>
@@ -15,16 +14,10 @@ function Food() {
       <SearchBar />
       <div className="foods-container">
         <nav>
-          <ul>
-            {foodsCategories
-              .map((food, index) => Object.values(food)
-                .map((value) => (<li key={ index }>{value}</li>)))}
-          </ul>
+          lado
         </nav>
         <main>
-          {foodsIngredients
-            .length !== 0 && foodsIngredients
-            .map((ingredient) => ingredient.strIngredient)}
+          meio
         </main>
       </div>
       <Footer />

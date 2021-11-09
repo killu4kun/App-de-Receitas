@@ -1,20 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Redirect, useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
 
 import Button from './Button';
 
 function SearchBar() {
-  const { setLocationName, handleClick, handleInputChange, handleRadioChange } = useContext(RecipeContext);
-  const [ingredientInput, setIngredient] = useState('');
-  const [searchIngredients, setSearchIngredients] = useState([]);
-  const [radioSelected, setRadioSelected] = useState('');
+  const { setLocationName, handleClick,
+    handleInputChange, handleRadioChange } = useContext(RecipeContext);
   const { pathname } = useLocation();
   const locationRoute = pathname.slice(1);
 
   useEffect(() => {
     setLocationName(locationRoute);
-  }, [])
+  }, []);
 
   // searchRecipe.length === 1 && <Redirect to={`/${locationName}/${searchRecipe[0].idMeal}`}
   return (
