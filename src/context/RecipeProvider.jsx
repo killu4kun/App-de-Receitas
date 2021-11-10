@@ -22,6 +22,7 @@ function RecipeProvider({ children }) {
   const [searchIngredients, setSearchIngredients] = useState([]);
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
+  const [showSearchBar, setShowSearchInput] = useState(false);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -64,6 +65,10 @@ function RecipeProvider({ children }) {
     }
   };
 
+  const handleSearchButtonClick = () => {
+    setShowSearchInput(!showSearchBar);
+  }
+
   const handleInputChange = (value) => {
     setIngredientInput(value);
   };
@@ -86,6 +91,7 @@ function RecipeProvider({ children }) {
     default:
       return 0;
     }
+    setShowSearchInput(false);
   };
 
   // didMount da massa
@@ -100,10 +106,13 @@ function RecipeProvider({ children }) {
     drinksCategories,
     drinksIngredients,
     searchIngredients,
+    mealsRecipes,
+    showSearchBar,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
+    handleSearchButtonClick,
     // mealsRecipes,
   };
 
