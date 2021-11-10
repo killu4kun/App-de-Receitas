@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import '../css/header.css';
+import RecipeContext from '../context/RecipeContext';
 
 function Header({ title, showSearch }) {
   const history = useHistory();
+  const { handleSearchButtonClick } = useContext(RecipeContext);
   return (
     <header className="header-container">
       <button
@@ -20,17 +22,17 @@ function Header({ title, showSearch }) {
         />
       </button>
       <h1 data-testid="page-title">{ title }</h1>
-      <button
+      {showSearch
+      && <button
         type="button"
-        style={ { visibility: !showSearch } }
-        onClick={ () => history.push('/explorar') }
+        onClick={ () => handleSearchButtonClick() }
       >
         <img
           src={ searchIcon }
           alt="Search"
           data-testid="search-top-btn"
         />
-      </button>
+         </button>}
     </header>
   );
 }
