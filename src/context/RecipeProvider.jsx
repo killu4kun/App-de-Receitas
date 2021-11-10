@@ -6,15 +6,24 @@ import {
   getAllIngredientsMeal,
   getAllCategoriesDrinks,
   getAllIngredientsDrinks,
+  getRecipeByIngredient,
+  getRecipeByName,
+  getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
 function RecipeProvider({ children }) {
-  const [mealsRecipes, setMealsRecipes ] = useState([]);
-  const [drinksRecipes, setDrinksRecipes ] = useState([]);
+  const [mealsRecipes, setMealsRecipes] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
   const [drinksIngredients, setDrinksIngredients] = useState([]);
+  const [ingredientInput, setIngredientInput] = useState('');
+  const [searchIngredients, setSearchIngredients] = useState([]);
+  const [radioSelected, setRadioSelected] = useState('');
+  const [locationName, setLocationName] = useState('');
+  const [showSearchBar, setShowSearchInput] = useState(false);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -26,35 +35,102 @@ function RecipeProvider({ children }) {
     setDrinksIngredients(await getAllIngredientsDrinks());
   };
 
-  // const receiveRecipes = async () => {
-  //   setMealsRecipes(await );
-  //   setDrinksRecipes(await );
-  // };
+  const retrieveSearchedRecipeByIngredient = async () => {
+    setSearchIngredients(
+      await getRecipeByIngredient(
+        locationName,
+        ingredientInput,
+      ),
+    );
+  };
+
+  const retrieveSearchedRecipeByName = async () => {
+    setSearchIngredients(
+      await getRecipeByName(
+        locationName,
+        ingredientInput,
+      ),
+    );
+  };
+
+  const retrieveSearchedRecipeByFirstLetter = async () => {
+    if (ingredientInput.length > 1) {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
+    } else {
+      setSearchIngredients(
+        await getRecipeByFirstLetter(
+          locationName,
+          ingredientInput,
+        ),
+      );
+    }
+  };
+
+  const handleSearchButtonClick = () => {
+    setShowSearchInput(!showSearchBar);
+  };
+
+  const handleInputChange = (value) => {
+    setIngredientInput(value);
+  };
+
+  const handleRadioChange = (value) => {
+    setRadioSelected(value);
+  };
+
+  const handleClick = () => {
+    switch (radioSelected) {
+    case 'ingredient':
+      retrieveSearchedRecipeByIngredient();
+      break;
+    case 'name':
+      retrieveSearchedRecipeByName();
+      break;
+    case 'first-letter':
+      retrieveSearchedRecipeByFirstLetter();
+      break;
+    default:
+      return 0;
+    }
+    setShowSearchInput(false);
+  };
 
   // didMount da massa
   useEffect(() => {
     retrieveFoods();
     retrieveDrinks();
+    async function fetchData() {
+      const mealsResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const baseMeals = await mealsResponse.json();
+      setMealsRecipes(baseMeals);
+      const drinksResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const baseDrinks = await drinksResponse.json();
+      setDrinksRecipes(baseDrinks);
+      setLoading(false);
+    }
+    fetchData();
   }, []);
-
-  // const fetchPlanets = async () => {
-  //   setLoading(true);
-  //   const response = await fetch(PLANET_API);
-  //   const { results } = await response.json(); // Dica do Glauco Lomenha, 14B
-  //   setData(results);
-  //   setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //   fetchPlanets();
-  // }, []);
 
   const contextValue = {
     foodsCategories,
     foodsIngredients,
     drinksCategories,
     drinksIngredients,
+    searchIngredients,
+    mealsRecipes,
+    drinksRecipes,
+    showSearchBar,
+    handleClick,
+    handleInputChange,
+    handleRadioChange,
+    setLocationName,
+    handleSearchButtonClick,
+    loading,
+    setLoading,
   };
+
+  console.log(mealsRecipes);
+  console.log(loading);
 
   return (
     <RecipeContext.Provider value={ contextValue }>
