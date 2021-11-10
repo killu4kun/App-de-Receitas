@@ -4,29 +4,17 @@ import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
+import EveryMealCard from '../components/everyMealCard';
 
 function Food() {
-  const { foodsCategories, foodsIngredients } = useContext(RecipeContext);
-  console.log(foodsCategories);
-  console.log(foodsIngredients);
-
+  const { loading,
+    showSearchBar } = useContext(RecipeContext);
   return (
     <div>
       <Header title="Comidas" showSearch />
-      <SearchBar />
+      { showSearchBar ? <SearchBar /> : null}
       <div className="foods-container">
-        <nav>
-          <ul>
-            {foodsCategories
-              .map((food, index) => Object.values(food)
-                .map((value) => (<li key={ index }>{value}</li>)))}
-          </ul>
-        </nav>
-        <main>
-          {foodsIngredients
-            .length !== 0 && foodsIngredients
-            .map((ingredient) => ingredient.strIngredient)}
-        </main>
+        { loading ? <p>LOADING...</p> : <EveryMealCard /> }
       </div>
       <Footer />
     </div>

@@ -1,49 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router';
+import Button from './Button';
 import RecipeContext from '../context/RecipeContext';
-import { getRecipeByIngredient } from '../services/recipesRequest';
 
 function SearchBar() {
-  const [ingredient, setIngredient] = useState('');
-  const [searchIngredients, setSearchIngredients] = useState([]);
+  const { setLocationName, handleClick,
+    handleInputChange, handleRadioChange } = useContext(RecipeContext);
   const { pathname } = useLocation();
-  const locationName = pathname.slice(1);
-
-  const retrieveSearchedRecipe = async () => {
-    setSearchIngredients(
-      await getRecipeByIngredient(
-        locationName,
-        ingredient,
-      ),
-    );
-  };
+  const locationRoute = pathname.slice(1);
 
   useEffect(() => {
-    retrieveSearchedRecipe();
+    setLocationName(locationRoute);
   }, []);
-  console.log(searchIngredients)
-
-  // useEffect(() => {
-  //   switch() {
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //     case :
-  //     break;
-  //   }
-  // }, [ingredient]);
 
   return (
     <section>
       <input
         placeholder="O que você deseja comer?"
         data-testid="search-input"
-        onChange={ ({ target: { value } }) => setIngredient(value) }
+        onChange={ ({ target: { value } }) => handleInputChange(value) }
       />
-      <label htmlFor="chosen-filter">
+      <label
+        htmlFor="chosen-filter"
+        onChange={ ({ target: { value } }) => handleRadioChange(value) }
+      >
         <input
           name="chosen-filter"
           type="radio"
@@ -69,6 +49,11 @@ function SearchBar() {
         />
         Primeira letra
       </label>
+      <Button
+        text="Buscar"
+        onClick={ handleClick }
+        data-testid="exec-search-btn"
+      />
     </section>
   );
 }
