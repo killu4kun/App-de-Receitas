@@ -6,7 +6,7 @@ const Button = ({ dataTestId, onClick, text }) => {
 		<button
 			onClick={ onClick }
 			data-testis={ dataTestId }
-			type="button"
+      type="button"
 		>
 			{text}
 		</button>
