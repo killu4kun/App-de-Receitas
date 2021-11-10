@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import EachCard from './EachCard';
 
-function EveryMealCard() {
-  const { mealsRecipes: { meals } } = useContext(RecipeContext);
+function EveryDrinkCard() {
+  const { drinksRecipes: { drinks } } = useContext(RecipeContext);
 
   const maxResults = 12;
-  if (!meals) {
+  if (!drinks) {
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     return <p>Nenhum resultado encontrado</p>;
   }
-  const everyRecipe = Object.values(meals).slice(0, maxResults);
+  const everyRecipe = Object.values(drinks).slice(0, maxResults);
   const everyCard = everyRecipe
     .map((recipe, index) => (
       <div
@@ -19,12 +19,12 @@ function EveryMealCard() {
         data-testid={ `${index}-recipe-card` }
         key={ index }
       >
-        <Link to={ `/comidas/${recipe.idMeal}` } key={ index }>
+        <Link to={ `/bebidas/${recipe.idDrink}` } key={ index }>
           <EachCard
             className="each-card"
-            imgsrc={ recipe.strMealThumb }
+            imgsrc={ recipe.strDrinkThumb }
             index={ index }
-            cardName={ recipe.strMeal }
+            cardName={ recipe.strDrink }
             data-testid={ `${index}-recipe-card` }
           />
         </Link>
@@ -38,4 +38,4 @@ function EveryMealCard() {
   );
 }
 
-export default EveryMealCard;
+export default EveryDrinkCard;

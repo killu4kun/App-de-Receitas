@@ -1,19 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-<<<<<<< HEAD
-const Button = ({ dataTestId, onClick, text }) => {
-	return (
-		<button
-			onClick={ onClick }
-			data-testis={ dataTestId }
-      type="button"
-		>
-			{text}
-		</button>
-	);
-}
-=======
 const Button = ({ dataTestId, onClick, text, disabled }) => (
   <button
     onClick={ onClick }
@@ -24,7 +11,6 @@ const Button = ({ dataTestId, onClick, text, disabled }) => (
     {text}
   </button>
 );
->>>>>>> 82f101f555f6a53fc924268a086a1d3a5792efc2
 
 Button.defaultProps = {
   dataTestId: undefined,
