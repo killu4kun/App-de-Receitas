@@ -6,18 +6,26 @@ import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
 
 function Food() {
-  const { searchIngredients, mealsRecipes,
-    showSearchBar } = useContext(RecipeContext);
+  const { foodsCategories, foodsIngredients } = useContext(RecipeContext);
+  console.log(foodsCategories);
+  console.log(foodsIngredients);
+
   return (
     <div>
       <Header title="Comidas" showSearch />
-     { showSearchBar ? <SearchBar /> : null}
+      <SearchBar />
       <div className="foods-container">
         <nav>
-          lado
+          <ul>
+            {foodsCategories
+              .map((food, index) => Object.values(food)
+                .map((value) => (<li key={ index }>{value}</li>)))}
+          </ul>
         </nav>
         <main>
-          meio
+          {foodsIngredients
+            .length !== 0 && foodsIngredients
+            .map((ingredient) => ingredient.strIngredient)}
         </main>
       </div>
       <Footer />
