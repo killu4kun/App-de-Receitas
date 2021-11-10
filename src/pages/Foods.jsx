@@ -6,12 +6,12 @@ import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
 
 function Food() {
-  const { searchIngredients, mealsRecipes } = useContext(RecipeContext);
-
+  const { searchIngredients, mealsRecipes,
+    showSearchBar } = useContext(RecipeContext);
   return (
     <div>
       <Header title="Comidas" showSearch />
-      <SearchBar />
+     { showSearchBar ? <SearchBar /> : null}
       <div className="foods-container">
         <nav>
           lado
