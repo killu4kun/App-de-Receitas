@@ -14,7 +14,7 @@ import {
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
   const [loading, setLoading] = useState(true);
-  const [drinksRecipes, setDrinksRecipes] = useState([]);
+  const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
