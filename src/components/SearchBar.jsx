@@ -1,31 +1,49 @@
-import React, { useContext, useEffect } from 'react';
-import { Redirect, useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
-
-import Button from './Button';
+import { getRecipeByIngredient } from '../services/recipesRequest';
 
 function SearchBar() {
-  const { setLocationName, handleClick,
-    handleInputChange, handleRadioChange } = useContext(RecipeContext);
+  const [ingredient, setIngredient] = useState('');
+  const [searchIngredients, setSearchIngredients] = useState([]);
   const { pathname } = useLocation();
-  const locationRoute = pathname.slice(1);
+  const locationName = pathname.slice(1);
+
+  const retrieveSearchedRecipe = async () => {
+    setSearchIngredients(
+      await getRecipeByIngredient(
+        locationName,
+        ingredient,
+      ),
+    );
+  };
 
   useEffect(() => {
-    setLocationName(locationRoute);
+    retrieveSearchedRecipe();
   }, []);
+  console.log(searchIngredients)
 
-  // searchRecipe.length === 1 && <Redirect to={`/${locationName}/${searchRecipe[0].idMeal}`}
+  // useEffect(() => {
+  //   switch() {
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //     case :
+  //     break;
+  //   }
+  // }, [ingredient]);
+
   return (
     <section>
       <input
         placeholder="O que você deseja comer?"
         data-testid="search-input"
-        onChange={ ({ target: { value } }) => handleInputChange(value) }
+        onChange={ ({ target: { value } }) => setIngredient(value) }
       />
-      <label
-        htmlFor="chosen-filter"
-        onChange={ ({ target: { value } }) => handleRadioChange(value) }
-      >
+      <label htmlFor="chosen-filter">
         <input
           name="chosen-filter"
           type="radio"
@@ -51,11 +69,6 @@ function SearchBar() {
         />
         Primeira letra
       </label>
-      <Button
-        text="Buscar"
-        onClick={ handleClick }
-        dataTestId="exec-search-btn"
-      />
     </section>
   );
 }
