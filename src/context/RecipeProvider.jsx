@@ -127,7 +127,6 @@ function RecipeProvider({ children }) {
     handleSearchButtonClick,
     loading,
     setLoading,
-    // mealsRecipes,
   };
 
   console.log(mealsRecipes);

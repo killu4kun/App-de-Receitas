@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
 
 import Button from './Button';
