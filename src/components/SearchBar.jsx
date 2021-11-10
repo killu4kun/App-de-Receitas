@@ -51,7 +51,11 @@ function SearchBar() {
         />
         Primeira letra
       </label>
-      <Button text="Buscar" onClick={ handleClick } />
+      <Button
+        text="Buscar"
+        onClick={ handleClick }
+        dataTestId="exec-search-btn"
+      />
     </section>
   );
 }
