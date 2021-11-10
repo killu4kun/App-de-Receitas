@@ -7,7 +7,7 @@ function Explore() {
   const history = useHistory();
   return (
     <div>
-      <Header title="Explorar" showSearch />
+      <Header title="Explorar" showSearch={ false } />
       <button
         type="button"
         onClick={ () => history.push('/explorar/comidas') }
