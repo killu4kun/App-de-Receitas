@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 const SLICE_EMAIL = 10;
 
 function Profile() {
-  const [retrieveEmail, setRetrieveEmail] = useState('')
+  const [retrieveEmail, setRetrieveEmail] = useState('');
   useEffect(() => {
     const user = localStorage.getItem('user'); // "email":"asidjnsuiahn@asjduioashd.com"
     if (user !== null) {
