@@ -44,7 +44,7 @@ function RecipeProvider({ children }) {
     //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     // }
   }, [locationName, searchIngredients, history]);
-console.log(searchIngredients)
+
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
