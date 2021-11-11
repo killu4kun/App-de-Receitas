@@ -5,7 +5,7 @@ import DrinkDetailCard from '../components/DrinkDetailsCard';
 
 function DrinkDetails(props) {
   const {
-    setShowSearchInput,
+    // setShowSearchInput,
     recipeID,
     setRecipeID,
     setID } = useContext(RecipeContext);
@@ -15,7 +15,7 @@ function DrinkDetails(props) {
 
   useEffect(() => {
     function handleHeader() {
-      setShowSearchInput(false);
+      // setShowSearchInput(false);
       setID(id);
     }
     handleHeader();

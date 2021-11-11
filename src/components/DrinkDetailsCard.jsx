@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   favoritedItem,
   handleToShareBtn,
@@ -17,6 +17,7 @@ function FoodDetailCard() {
   const [heartChange, setHeartChange] = useState('');
   const totalIngredients = 16;
   const SIX = 6; // limite de recomendaçoes
+  const history = useHistory();
 
   useEffect(() => {
     setFavorited(favoritedItem(ID));
@@ -63,7 +64,7 @@ function FoodDetailCard() {
         <div>
           <button
             type="button"
-            dataTest="share-btn"
+            data-testid="share-btn"
             onClick={ ({ target }) => handleToShareBtn(target, ID, 'bebidas') }
             text="Compartilhar receita"
           >
@@ -71,7 +72,7 @@ function FoodDetailCard() {
           </button>
           <button
             type="button"
-            dataTest="favorite-btn"
+            data-testid="favorite-btn"
             onClick={ () => handleClick(recipeID, ID, 'bebidas', setHeartChange) }
             text="Favoritar comida"
           >
@@ -100,6 +101,7 @@ function FoodDetailCard() {
           <p data-testid="video">video</p>
         </div>
         <div>
+          <h1 data-testid="0-recomendation-title">Recomendadas</h1>
           {recommendations.length > 1 ? (
             recommendations.map((recommended, index) => (
               index < SIX ? (
@@ -112,7 +114,10 @@ function FoodDetailCard() {
                   </div>
                   <div>
                     <p>{ recommended.strCategory }</p>
-                    <p>{ recommended.strMeal }</p>
+                    <p data-testid={ `${index}-recomendation-title` }>
+                      {recommended.strMeal}
+
+                    </p>
                   </div>
                 </div>
               ) : null
@@ -120,14 +125,13 @@ function FoodDetailCard() {
           ) : <p>Loading...</p>}
         </div>
         <div>
-          <Link to={ `/bebidas/${ID}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`/bebidas/${ID}/in-progress`) }
+          >
+            Iniciar Receita
+          </button>
         </div>
       </div>
     </div>

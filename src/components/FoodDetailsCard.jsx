@@ -1,7 +1,7 @@
 // os detalhes serão chamados na pagina, que faz a solicitação da API novamente para
 // pegar os dados e renderizar atraves da conexão de components e o estado global
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   favoritedItem,
   handleToShareBtn,
@@ -19,6 +19,7 @@ function FoodDetailCard() {
   const [heartChange, setHeartChange] = useState(''); // change heart logo (favorites)
   const totalIngredients = 16;
   const SIX = 6; // restrição do numero de recomendaçoes
+  const history = useHistory();
 
   useEffect(() => {
     setFavorited(favoritedItem(ID));
@@ -65,7 +66,7 @@ function FoodDetailCard() {
         <div>
           <button
             type="button"
-            dataTest="share-btn"
+            data-testid="share-btn"
             onClick={ ({ target }) => handleToShareBtn(target, ID, 'comidas') }
             text="Compartilhar receita"
           >
@@ -73,7 +74,7 @@ function FoodDetailCard() {
           </button>
           <button
             type="button"
-            dataTest="favorite-btn"
+            data-testid="favorite-btn"
             onClick={ () => handleClick(recipeID, ID, 'comida', setHeartChange) }
             text="Favoritar comida"
           >
@@ -102,6 +103,7 @@ function FoodDetailCard() {
           <p data-testid="video">video</p>
         </div>
         <div>
+          <h1 data-testid="0-recomendation-title">Recomendadas</h1>
           {recommendations.length > 1 ? (
             recommendations.map((recommended, index) => (
               index < SIX ? (
@@ -114,7 +116,9 @@ function FoodDetailCard() {
                   </div>
                   <div>
                     <p>{ recommended.strCategory }</p>
-                    <p>{ recommended.strDrink }</p>
+                    <p data-testid={ `${index}-recomendation-title` }>
+                      { recommended.strDrink }
+                    </p>
                   </div>
                 </div>
               ) : null
@@ -122,14 +126,13 @@ function FoodDetailCard() {
           ) : <p>Loading...</p>}
         </div>
         <div>
-          <Link to={ `/comidas/${ID}/in-progress` }>
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`/comidas/${ID}/in-progress`) }
+          >
+            Iniciar Receita
+          </button>
         </div>
       </div>
     </div>
