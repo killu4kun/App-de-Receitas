@@ -23,6 +23,7 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const [recipesDb, setRecipesDb] = useState([]);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
