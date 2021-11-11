@@ -45,6 +45,10 @@ function RecipeProvider({ children }) {
     // }
   }, [locationName, searchIngredients, history]);
 
+  const [recipeID, setRecipeID] = useState('');
+  const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
+  // buscada no retorno da API na pagina de detalhes
+
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
@@ -147,6 +151,10 @@ function RecipeProvider({ children }) {
     handleSearchButtonClick,
     loading,
     setLoading,
+    setRecipeID,
+    setID,
+    recipeID,
+    ID,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>
