@@ -11,7 +11,7 @@ function FoodInProgress() {
   const handleClick = () => {
     copy('Favoritar receita')
   }
-  // const regexForIngredients = /indredient/i
+  // const regexForIngredients = /ingredient/i
   // const filterIngredients = Object.keys(foodInProgress)
   //   .filter((food) => regexForIngredients.test(food))
   return (
@@ -31,7 +31,7 @@ function FoodInProgress() {
           onClick={ () => handleClick }
         />
         <h4 data-testid="instructions">Instruções de preparo</h4>
-        <ListIngredients />
+        {/* <ListIngredients /> */}
       </main>
       <footer>
         <Button
