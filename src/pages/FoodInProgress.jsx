@@ -9,25 +9,52 @@ import { handleFavoritedBtn, favoritedItem, handleToShareBtn } from '../services
 import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
 import WhiteHeart from '../images/whiteHeartIcon.svg';
+const totalIngredients = 16;
 
 function FoodInProgress() {
   const history = useHistory();
+  const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [favorited, setFavorited] = useState(false);
   const { recipeInProgress, recipeID, ID } = useContext(RecipeContext);
   const [heartChange, setHeartChange] = useState('');
-  console.log(recipeInProgress)
+  const [recipeMaking, setRecipeMaking] = useState([])
   const copy = require('clipboard-copy');
   const handleClick = () => {
     copy('Favoritar receita')
   }
+
+    useEffect(() => {
+    function getIngredientsAndMeasures() {
+      const ingredientsAndMeasures = [];
+      for (let index = 1; index < totalIngredients; index += 1) {
+        const ingredient = recipeID[`strIngredient${index}`]; // pega os resultados da api. resultados da api amarzenados em recipeId
+        const measure = recipeID[`strMeasure${index}`]; // recebe a api com o id da seleção e passa estado global que retorna aqui
+        if (ingredient) {
+          ingredientsAndMeasures.push({ ingredient, measure });
+        }
+      }
+      setAllIngredientsMeasures(ingredientsAndMeasures); // retorna os ingredientes e quantidades com base no id da receita selecionada
+    }
+    getIngredientsAndMeasures();
+  }, []);
+
    useEffect(() => {
     setFavorited(favoritedItem(ID));
   }, [heartChange]);
 
+  useEffect(() => {
+    const fetchRecipeInProgress = async() => {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ID}`);
+      const resolve = await response.json()
+      setRecipeMaking(resolve.meals);
+    }
+    fetchRecipeInProgress()
+  }, []);
+
   const handleFavoritedClick = (recipe, Id, type, func) => {
     handleFavoritedBtn(recipe, Id, type, func);
   }
-
+console.log(allIngredientsMeasures)
   return (
     <div>
       <header>
@@ -59,7 +86,7 @@ function FoodInProgress() {
           </button>
         </div>
         <h4 data-testid="instructions">Instruções de preparo</h4>
-        <ListIngredients ingredients={ recipeInProgress } />
+        <ListIngredients ingredients={ allIngredientsMeasures } />
       </main>
       <footer>
         <Button

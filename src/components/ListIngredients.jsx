@@ -5,14 +5,14 @@ const ListIngredients = ({ ingredients }) => {
   console.log(ingredients)
   return (
   <ol>
-    {ingredients.map(({ ingredient }, index) => (
+    {ingredients.map(({ ingredient, measure }, index) => (
       <li
         data-testid={ `${index}-ingredient-step` }
         key={ index }
       >
         <label>
         <input type="checkbox" />
-        {ingredient}
+        {`${measure} - ${ingredient}`}
         </label>
       </li>
     ))}

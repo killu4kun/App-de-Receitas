@@ -51,7 +51,6 @@ function FoodDetailCard() {
   function handleClick(recipe, Id, type, func) {
     handleFavoritedBtn(recipe, Id, type, func);
   }
-  console.log(allIngredientsMeasures)
 
   return (
     <div>
@@ -131,7 +130,7 @@ function FoodDetailCard() {
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => {
-              setRecipeInProgress(allIngredientsMeasures);
+              // setRecipeInProgress(allIngredientsMeasures);
               history.push(`/comidas/${ID}/in-progress`);
             }}
           >
