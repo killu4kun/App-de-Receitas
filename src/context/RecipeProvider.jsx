@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import RecipeContext from './RecipeContext';
 import {
   getAllCategoriesMeal,
@@ -24,6 +25,17 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (searchIngredients.length === 1) {
+      if (locationName === 'bebidas') {
+        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+      } else if (locationName === 'comidas') {
+        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+      }
+    }
+  }, [locationName, searchIngredients, history]);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
