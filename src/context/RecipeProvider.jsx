@@ -45,6 +45,8 @@ function RecipeProvider({ children }) {
     // }
   }, [locationName, searchIngredients, history]);
 
+  console.log('xablau');
+
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
