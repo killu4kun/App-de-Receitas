@@ -31,7 +31,7 @@ function RecipeProvider({ children }) {
   useEffect(() => {
     if (searchIngredients === null || searchIngredients === undefined) {
       return global
-        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
     if (searchIngredients.length === 1) {
       if (locationName === 'comidas') {
@@ -39,10 +39,9 @@ function RecipeProvider({ children }) {
       } else if (locationName === 'bebidas') {
         history.push(`${locationName}/${searchIngredients[0].idDrink}`);
       }
+    } else if (searchIngredients.length > 1) {
+      setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     }
-    // else if (searchIngredients.length > 1) {
-    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
-    // }
   }, [locationName, searchIngredients, history]);
 
   const retrieveFoods = async () => {
@@ -72,7 +71,7 @@ function RecipeProvider({ children }) {
       ),
     );
   };
-  
+
   const retrieveSearchedRecipeByFirstLetter = async () => {
     if (ingredientInput.length > 1) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
@@ -97,7 +96,7 @@ function RecipeProvider({ children }) {
   const handleRadioChange = (value) => {
     setRadioSelected(value);
   };
-   console.log(locationName, ingredientInput, searchIngredients)
+
   const handleClick = () => {
     switch (radioSelected) {
     case 'ingredient':
