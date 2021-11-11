@@ -13,6 +13,8 @@ function SearchBar() {
     setLocationName(locationRoute);
   }, []);
 
+  console.log('funcionou');
+
   return (
     <section>
       <input
