@@ -7,7 +7,6 @@ import {
   handleToShareBtn,
   handleFavoritedBtn } from '../services/utilityFunctions';
 import RecipeContext from '../context/RecipeContext';
-import Button from './Button';
 import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
 import WhiteHeart from '../images/whiteHeartIcon.svg';
@@ -64,18 +63,22 @@ function FoodDetailCard() {
       <div>
         <h2 data-testid="recipe-title">{ recipeID.strMeal }</h2>
         <div>
-          <Button
+          <button
+            type="button"
             dataTest="share-btn"
-            src={ ShareIcon }
             onClick={ ({ target }) => handleToShareBtn(target, ID, 'comidas') }
             text="Compartilhar receita"
-          />
-          <Button
+          >
+            <img src={ ShareIcon } alt="compartilhar" />
+          </button>
+          <button
+            type="button"
             dataTest="favorite-btn"
-            src={ favorited ? BlackHeart : WhiteHeart }
             onClick={ () => handleClick(recipeID, ID, 'comida', setHeartChange) }
             text="Favoritar comida"
-          />
+          >
+            <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
+          </button>
         </div>
         <h5 data-testid="recipe-category">{ recipeID.strCategory }</h5>
         <div />
