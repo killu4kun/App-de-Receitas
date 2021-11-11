@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import RecipeContext from './RecipeContext';
 import {
   getAllCategoriesMeal,
@@ -10,6 +11,8 @@ import {
   getRecipeByName,
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
+
+const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
@@ -24,6 +27,23 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const history = useHistory();
+  useEffect(() => {
+    if (searchIngredients === null || searchIngredients === undefined) {
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+    if (searchIngredients.length === 1) {
+      if (locationName === 'comidas') {
+        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+      } else if (locationName === 'bebidas') {
+        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+      }
+    }
+    // else if (searchIngredients.length > 1) {
+    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+    // }
+  }, [locationName, searchIngredients, history]);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -128,10 +148,6 @@ function RecipeProvider({ children }) {
     loading,
     setLoading,
   };
-
-  console.log(mealsRecipes);
-  console.log(loading);
-
   return (
     <RecipeContext.Provider value={ contextValue }>
       {children}
