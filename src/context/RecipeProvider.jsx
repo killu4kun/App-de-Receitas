@@ -28,22 +28,22 @@ function RecipeProvider({ children }) {
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
   const history = useHistory();
-  // useEffect(() => {
-  //   if (searchIngredients.length === 1) {
-  //     if (locationName === 'comidas') {
-  //       history.push(`${locationName}/${searchIngredients[0].idMeal}`);
-  //     } else if (locationName === 'bebidas') {
-  //       history.push(`${locationName}/${searchIngredients[0].idDrink}`);
-  //     }
-  //   }
-  //   // else if (searchIngredients.length > 1) {
-  //   //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
-  //   // }
-  // }, [locationName, searchIngredients, history]);
-
   useEffect(() => {
-    handleClick()
-  }, [searchIngredients])
+    if (searchIngredients === null || searchIngredients === undefined) {
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')
+    }
+    if (searchIngredients.length === 1) {
+      if (locationName === 'comidas') {
+        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+      } else if (locationName === 'bebidas') {
+        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+      }
+    }
+    // else if (searchIngredients.length > 1) {
+    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+    // }
+  }, [locationName, searchIngredients, history]);
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
