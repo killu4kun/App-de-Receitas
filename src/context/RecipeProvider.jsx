@@ -12,6 +12,8 @@ import {
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
+const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
   const [loading, setLoading] = useState(true);
@@ -26,16 +28,22 @@ function RecipeProvider({ children }) {
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
   const history = useHistory();
+  // useEffect(() => {
+  //   if (searchIngredients.length === 1) {
+  //     if (locationName === 'comidas') {
+  //       history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+  //     } else if (locationName === 'bebidas') {
+  //       history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+  //     }
+  //   }
+  //   // else if (searchIngredients.length > 1) {
+  //   //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+  //   // }
+  // }, [locationName, searchIngredients, history]);
 
   useEffect(() => {
-    if (searchIngredients.length === 1) {
-      if (locationName === 'bebidas') {
-        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
-      } else if (locationName === 'comidas') {
-        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
-      }
-    }
-  }, [locationName, searchIngredients, history]);
+    handleClick()
+  }, [searchIngredients])
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -64,7 +72,7 @@ function RecipeProvider({ children }) {
       ),
     );
   };
-
+  
   const retrieveSearchedRecipeByFirstLetter = async () => {
     if (ingredientInput.length > 1) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
@@ -89,7 +97,7 @@ function RecipeProvider({ children }) {
   const handleRadioChange = (value) => {
     setRadioSelected(value);
   };
-
+   console.log(locationName, ingredientInput, searchIngredients)
   const handleClick = () => {
     switch (radioSelected) {
     case 'ingredient':
@@ -140,10 +148,6 @@ function RecipeProvider({ children }) {
     loading,
     setLoading,
   };
-
-  console.log(mealsRecipes);
-  console.log(loading);
-
   return (
     <RecipeContext.Provider value={ contextValue }>
       {children}

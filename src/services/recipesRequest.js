@@ -75,8 +75,9 @@ export const getRecipeByIngredient = async (type, ingredientName) => {
     const response = await results.json();
     return response.meals;
   }
+  console.log(SEARCH_FOR_INGREDIENT_MEAL + ingredientName)
 };
-
+getRecipeByIngredient()
 export const getRecipeByName = async (type, ingredientName) => {
   if (type === 'bebidas') {
     const results = await fetch(SEARCH_FOR_NAME_COCKTAIL + ingredientName);
