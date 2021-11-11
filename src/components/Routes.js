@@ -25,16 +25,16 @@ export default function Routes() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/comidas" component={ Foods } />
       <Route exact path="/bebidas" component={ Drinks } />
-      <Route exact path="/comidas/{id-da-receita}" component={ FoodRecipe } />
-      <Route exact path="/bebidas/{id-da-receita}" component={ DrinkRecipe } />
+      {/* <Route exact path="/comidas/:id-da-receita" component={ FoodRecipe } />
+      <Route exact path="/bebidas/:id-da-receita" component={ DrinkRecipe } /> */}
       <Route
-        exact
-        path="/comidas/{id-da-receita}/in-progress"
+        // exact
+        path="/comidas/:id/in-progress"
         component={ FoodInProgress }
       />
       <Route
         exact
-        path="/bebidas/{id-da-receita}/in-progress"
+        path="/bebidas/:id/in-progress"
         component={ DrinkInProgress }
       />
       <Route exact path="/explorar" component={ Explore } />

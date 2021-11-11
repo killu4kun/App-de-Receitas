@@ -12,7 +12,7 @@ import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 
 function FoodDetailCard() {
-  const { recipeID, ID } = useContext(RecipeContext); // retorno da API armazenado
+  const { recipeID, ID, setRecipeInProgress } = useContext(RecipeContext); // retorno da API armazenado
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [favorited, setFavorited] = useState(false);
@@ -47,10 +47,11 @@ function FoodDetailCard() {
     } // api armazenada no estado de recomendaçoes
     fetchRecommendations();
   }, []); // para comidas se recomenda drinks
-
+  
   function handleClick(recipe, Id, type, func) {
     handleFavoritedBtn(recipe, Id, type, func);
   }
+  console.log(allIngredientsMeasures)
 
   return (
     <div>
@@ -129,7 +130,10 @@ function FoodDetailCard() {
           <button
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => history.push(`/comidas/${ID}/in-progress`) }
+            onClick={ () => {
+              setRecipeInProgress(allIngredientsMeasures);
+              history.push(`/comidas/${ID}/in-progress`);
+            }}
           >
             Iniciar Receita
           </button>

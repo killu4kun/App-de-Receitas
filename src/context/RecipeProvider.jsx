@@ -27,6 +27,7 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const [recipeInProgress, setRecipeInProgress] = useState([])
   const history = useHistory();
   useEffect(() => {
     if (searchIngredients === null || searchIngredients === undefined) {
@@ -44,8 +45,6 @@ function RecipeProvider({ children }) {
     //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     // }
   }, [locationName, searchIngredients, history]);
-
-  console.log('xablau');
 
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
@@ -146,17 +145,19 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    recipeInProgress,
+    loading,
+    recipeID,
+    ID,
+    setRecipeInProgress,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
-    loading,
     setLoading,
     setRecipeID,
     setID,
-    recipeID,
-    ID,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>
