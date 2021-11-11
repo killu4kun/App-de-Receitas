@@ -8,7 +8,9 @@ const ListIngredients = ({ ingredients }) => (
         data-testid={ `${index}-ingredient-step` }
         key={ index }
       >
+        <input type="checkbox">
         {ingredient}
+        </input>
       </li>
     ))}
   </ol>
