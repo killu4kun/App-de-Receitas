@@ -39,9 +39,10 @@ function RecipeProvider({ children }) {
       } else if (locationName === 'bebidas') {
         history.push(`${locationName}/${searchIngredients[0].idDrink}`);
       }
-    } else if (searchIngredients.length > 1) {
-      setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     }
+    // else if (searchIngredients.length > 1) {
+    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+    // }
   }, [locationName, searchIngredients, history]);
 
   const retrieveFoods = async () => {
