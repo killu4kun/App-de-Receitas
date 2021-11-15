@@ -5,18 +5,20 @@ import { useHistory } from 'react-router-dom';
 import {
   favoritedItem,
   handleToShareBtn,
-  handleFavoritedBtn } from '../services/utilityFunctions';
+  handleFavoritedBtn,
+  handleKeyInLocalStorage } from '../services/utilityFunctions';
 import RecipeContext from '../context/RecipeContext';
 import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 
 function FoodDetailCard() {
-  const { recipeID, ID, setRecipeInProgress } = useContext(RecipeContext); // retorno da API armazenado
+  const { recipeID, ID } = useContext(RecipeContext); // retorno da API armazenado
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [favorited, setFavorited] = useState(false);
   const [heartChange, setHeartChange] = useState(''); // change heart logo (favorites)
+  const [mealsOfLocalStorage, setMealsOfLocalStorage] = useState({});
   const totalIngredients = 16;
   const SIX = 6; // restrição do numero de recomendaçoes
   const history = useHistory();
@@ -24,6 +26,13 @@ function FoodDetailCard() {
   useEffect(() => {
     setFavorited(favoritedItem(ID));
   }, [heartChange]);
+
+  // useEffect(() => {
+  //   const meals = localStorage.getItem('meals') !== null
+  //     ? localStorage.getItem('meals') : {};
+  //     console.log(meals)
+  //   setMealsOfLocalStorage(meals);
+  // }, []);
 
   useEffect(() => {
     function getIngredientsAndMeasures() {
@@ -47,9 +56,22 @@ function FoodDetailCard() {
     } // api armazenada no estado de recomendaçoes
     fetchRecommendations();
   }, []); // para comidas se recomenda drinks
-  
+
   function handleClick(recipe, Id, type, func) {
     handleFavoritedBtn(recipe, Id, type, func);
+  }
+
+  function handleStartRecipe() {
+    const ingredients = allIngredientsMeasures.map(({ ingredient }) => ingredient);
+    const meals = {
+      [ID]: ingredients,
+    };
+    const recipePhoto = {
+      recipeID,
+    };
+    localStorage.setItem('meals', JSON.stringify(meals));
+    localStorage.setItem('recipeID', JSON.stringify(recipePhoto));
+    history.push(`/comidas/${ID}/in-progress`);
   }
 
   return (
@@ -129,10 +151,7 @@ function FoodDetailCard() {
           <button
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => {
-              // setRecipeInProgress(allIngredientsMeasures);
-              history.push(`/comidas/${ID}/in-progress`);
-            }}
+            onClick={ () => handleStartRecipe() }
           >
             Iniciar Receita
           </button>

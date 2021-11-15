@@ -50,6 +50,13 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
   }
 }
 
+export function handleKeyInLocalStorage(key, id) {
+  const textButton = Object.keys(key).length === 0
+            && !Object.keys(key).contains(id)
+    ? 'Iniciar Receita' : 'Continuar Receita';
+  return textButton;
+}
+
 // The some() method tests whether at least one element in the array passes the test implemented by the provided function
 
 // a chave favoriteRecipes deve conter a seguinte estrutura:

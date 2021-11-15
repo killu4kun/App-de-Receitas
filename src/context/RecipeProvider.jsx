@@ -27,7 +27,7 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
-  const [recipeInProgress, setRecipeInProgress] = useState([])
+  const [recipeInProgress, setRecipeInProgress] = useState([]);
   const history = useHistory();
   useEffect(() => {
     if (searchIngredients === null || searchIngredients === undefined) {
@@ -150,14 +150,14 @@ function RecipeProvider({ children }) {
     recipeID,
     ID,
     setRecipeInProgress,
-    handleClick,
-    handleInputChange,
-    handleRadioChange,
     setLocationName,
-    handleSearchButtonClick,
     setLoading,
     setRecipeID,
     setID,
+    handleClick,
+    handleInputChange,
+    handleRadioChange,
+    handleSearchButtonClick,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>
