@@ -12,7 +12,7 @@ import {
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
-const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
@@ -27,6 +27,10 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+<<<<<<< HEAD
+=======
+  const [recipeInProgress, setRecipeInProgress] = useState([]);
+>>>>>>> 2d9022c5a95aa14c63bb302c677c8bab443144ca
   const history = useHistory();
   useEffect(() => {
     if (searchIngredients === null || searchIngredients === undefined) {
@@ -45,7 +49,8 @@ function RecipeProvider({ children }) {
     // }
   }, [locationName, searchIngredients, history]);
   const [recipesDb, setRecipesDb] = useState([]);
-  // const [urlFoods, setUrlFoods] = useState([]);
+  // const [urlFoods,setUrlFoods] = useState([]);
+
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes
@@ -145,19 +150,20 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
-    recipesDb,
     loading,
     recipeID,
+    recipesDb,
     ID,
-    handleClick,
-    handleInputChange,
-    handleRadioChange,
+    setRecipeInProgress,
     setLocationName,
-    handleSearchButtonClick,
     setLoading,
     setRecipeID,
     setID,
     setRecipesDb,
+    handleClick,
+    handleInputChange,
+    handleRadioChange,
+    handleSearchButtonClick,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>

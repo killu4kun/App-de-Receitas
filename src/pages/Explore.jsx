@@ -1,7 +1,7 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import {useHistory} from 'react-router-dom';
 
 function Explore() {
   const history = useHistory();
@@ -21,7 +21,7 @@ function Explore() {
       <button
         type="button"
         onClick={ () => handleClick('/explorar/bebidas') }
-        data-test-id="explore-drinks"
+        data-testid="explore-drinks"
       >
         Explorar Bebidas
       </button>
