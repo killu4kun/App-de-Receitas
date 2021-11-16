@@ -24,6 +24,7 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const [recipesDb, setRecipesDb] = useState([]);
 
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita

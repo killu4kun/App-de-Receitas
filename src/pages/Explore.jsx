@@ -5,8 +5,21 @@ import Footer from '../components/Footer';
 function Explore() {
   return (
     <div>
-      <Header title="Explorar" showSearch />
-      <h1> Explore </h1>
+      <Header title="Explorar" showSearch={ false } />
+      <button
+        type="button"
+        onClick={ () => history.push('/explorar/comidas') }
+        data-testid="explore-food"
+      >
+        Explorar Comidas
+      </button>
+      <button
+        type="button"
+        onClick={ () => history.push('/explorar/bebidas') }
+        data-test-id="explore-drinks"
+      >
+        Explorar Bebidas
+      </button>
       <Footer />
     </div>
   );
