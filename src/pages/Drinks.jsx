@@ -11,7 +11,7 @@ function Drinks() {
     showSearchBar } = useContext(RecipeContext);
   return (
     <div>
-      <Header title="Comidas" showSearch />
+      <Header title="Bebidas" showSearch />
       { showSearchBar ? <SearchBar /> : null}
       <div className="foods-container">
         { loading ? <p>LOADING...</p> : <EveryDrinkCard /> }

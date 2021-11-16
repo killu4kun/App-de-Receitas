@@ -39,6 +39,7 @@ function Profile() {
       </button>
       <button
         type="button"
+        data-testid="profile-logout-btn"
         onClick={ () => {
           localStorage.clear();
           history.push('/');
