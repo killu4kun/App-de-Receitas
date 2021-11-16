@@ -17,7 +17,7 @@ function Login() {
     const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return regexEmail.test(email);
   };
-  
+
   useEffect(() => {
     const handleValidate = () => {
       if (isEmailValid(userEmail) && password.length > PASSWORD_LENGTH) {
