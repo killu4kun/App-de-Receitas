@@ -69,7 +69,7 @@ function FoodDetailCard() {
     const recipePhoto = {
       recipeID,
     };
-    localStorage.setItem('meals', JSON.stringify(meals));
+    localStorage.setItem('inProgress', JSON.stringify(meals));
     localStorage.setItem('recipeID', JSON.stringify(recipePhoto));
     history.push(`/comidas/${ID}/in-progress`);
   }

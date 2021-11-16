@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import RecipeContext from '../context/RecipeContext';
+// import RecipeContext from '../context/RecipeContext';
 import '../css/foodInProgress.css';
 
 const ListIngredients = ({ ingredients }) => {
   const [compareChecked, setCompareChecked] = useState({});
-  const [retrieveIndex, setRetrieveIndex] = useState(0);
-  const { ID } = useContext(RecipeContext);
+  // const [retrieveIndex, setRetrieveIndex] = useState(0);
+  // const { ID } = useContext(RecipeContext);
   // useEffect(() => {
   //   const meals = {
   //     [ID]: ID ? { ingredients, index: retrieveIndex } : ingredients,
@@ -15,7 +15,7 @@ const ListIngredients = ({ ingredients }) => {
   // }, [compareChecked, retrieveIndex, ID, ingredients]);
 
   // recuperar localStorage
-  // fazer um map em cada ingrediente e transformar 
+  // fazer um map em cada ingrediente e transformar
   // em objeto com a chave checked, id e ingrediente
   // {}
 

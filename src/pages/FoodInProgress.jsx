@@ -22,9 +22,9 @@ function FoodInProgress() {
   useEffect(() => {
     setFavorited(favoritedItem(ID));
   }, [heartChange, ID]);
-
+  
   useEffect(() => {
-    setCurrentRecipe(JSON.parse(localStorage.getItem('meals')));
+    setCurrentRecipe(JSON.parse(localStorage.getItem('inProgress')));
     setRecipeForPhoto(JSON.parse(localStorage.getItem('recipeID')));
   }, []);
 
