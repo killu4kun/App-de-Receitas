@@ -12,7 +12,7 @@ import {
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
-const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
