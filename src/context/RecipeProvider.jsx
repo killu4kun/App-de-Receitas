@@ -44,7 +44,7 @@ function RecipeProvider({ children }) {
     //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     // }
   }, [locationName, searchIngredients, history]);
-
+  const [recipesDb, setRecipesDb] = useState([]);
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes
@@ -144,17 +144,19 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    recipesDb,
+    loading,
+    recipeID,
+    ID,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
-    loading,
     setLoading,
     setRecipeID,
     setID,
-    recipeID,
-    ID,
+    setRecipesDb,
   };
   return (
     <RecipeContext.Provider value={ contextValue }>

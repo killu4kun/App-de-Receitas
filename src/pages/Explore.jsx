@@ -6,7 +6,20 @@ function Explore() {
   return (
     <div>
       <Header title="Explorar" showSearch={ false } />
-      <h1> Explore </h1>
+      <button
+        type="button"
+        onClick={ () => history.push('/explorar/comidas') }
+        data-testid="explore-food"
+      >
+        Explorar Comidas
+      </button>
+      <button
+        type="button"
+        onClick={ () => history.push('/explorar/bebidas') }
+        data-test-id="explore-drinks"
+      >
+        Explorar Bebidas
+      </button>
       <Footer />
     </div>
   );
