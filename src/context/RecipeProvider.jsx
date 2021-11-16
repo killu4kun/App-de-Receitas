@@ -45,6 +45,8 @@ function RecipeProvider({ children }) {
     //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
     // }
   }, [locationName, searchIngredients, history]);
+  const [recipesDb, setRecipesDb] = useState([]);
+  const [urlFoods,setUrlFoods] = useState([]);
 
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
@@ -148,12 +150,14 @@ function RecipeProvider({ children }) {
     recipeInProgress,
     loading,
     recipeID,
+    recipesDb,
     ID,
     setRecipeInProgress,
     setLocationName,
     setLoading,
     setRecipeID,
     setID,
+    setRecipesDb,
     handleClick,
     handleInputChange,
     handleRadioChange,

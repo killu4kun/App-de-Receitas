@@ -18,6 +18,7 @@ import DoneRecipes from '../pages/DoneRecipes';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 import FoodDetails from '../pages/FoodDetails';
 import DrinkDetails from '../pages/DrinkDetails';
+import NotFound from '../pages/NotFound';
 
 export default function Routes() {
   return (
@@ -55,8 +56,9 @@ export default function Routes() {
       <Route exact path="/receitas-feitas" component={ DoneRecipes } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
 
-      <Route exact path="/comidas/:id" component={ FoodDetails } />
-      <Route exact path="/bebidas/:id" component={ DrinkDetails } />
+      <Route path="/comidas/:id" component={ FoodDetails } />
+      <Route path="/bebidas/:id" component={ DrinkDetails } />
+      <Route path="/explorar/bebidas/area" component={ NotFound } />
 
     </Switch>
   );
