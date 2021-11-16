@@ -32,6 +32,7 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
     name: recipeID.strDrink || recipeID.strMeal,
     image: recipeID.strDrinkThumb || recipeID.strMealThumb,
   };
+
   if (!localStorage.getItem('favoriteRecipes')) {
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
   }

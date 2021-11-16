@@ -6,7 +6,7 @@ import {
   favoritedItem,
   handleToShareBtn,
   handleFavoritedBtn,
-  handleKeyInLocalStorage } from '../services/utilityFunctions';
+} from '../services/utilityFunctions';
 import RecipeContext from '../context/RecipeContext';
 import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
@@ -18,7 +18,7 @@ function FoodDetailCard() {
   const [recommendations, setRecommendations] = useState([]);
   const [favorited, setFavorited] = useState(false);
   const [heartChange, setHeartChange] = useState(''); // change heart logo (favorites)
-  const [mealsOfLocalStorage, setMealsOfLocalStorage] = useState({});
+  // const [mealsOfLocalStorage, setMealsOfLocalStorage] = useState({});
   const totalIngredients = 16;
   const SIX = 6; // restrição do numero de recomendaçoes
   const history = useHistory();
@@ -99,6 +99,8 @@ function FoodDetailCard() {
             data-testid="favorite-btn"
             onClick={ () => handleClick(recipeID, ID, 'comida', setHeartChange) }
             text="Favoritar comida"
+            src={ favorited ? BlackHeart : WhiteHeart }
+            alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
           </button>
@@ -150,6 +152,7 @@ function FoodDetailCard() {
         <div>
           <button
             type="button"
+            className="btn-start-recipe"
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >
