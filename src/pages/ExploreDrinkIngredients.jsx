@@ -1,5 +1,5 @@
-import React,{useContext,useState,useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -12,12 +12,12 @@ function ExploreDrinkIngredients() {
 
   useEffect(() => {
     const getIngredients = async () => {
-      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list`);
+      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
       const data = await response.json();
       setIngredients(data.drinks);
-    }
+    };
     getIngredients();
-  } ,[]);
+  }, []);
 
   async function getDrinksFromIngredients(param) {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${param}`);

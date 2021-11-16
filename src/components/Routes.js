@@ -5,8 +5,6 @@ import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
 import Profile from '../pages/Profile';
 import Explore from '../pages/Explore';
-import FoodRecipe from '../pages/FoodRecipe';
-import DrinkRecipe from '../pages/DrinkRecipe';
 import FoodInProgress from '../pages/FoodInProgress';
 import DrinkInProgress from '../pages/DrinkInProgress';
 import ExploreDrinks from '../pages/ExploreDrinks';
