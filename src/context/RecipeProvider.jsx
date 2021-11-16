@@ -27,10 +27,7 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
-<<<<<<< HEAD
-=======
   const [recipeInProgress, setRecipeInProgress] = useState([]);
->>>>>>> 2d9022c5a95aa14c63bb302c677c8bab443144ca
   const history = useHistory();
   useEffect(() => {
     if (searchIngredients === null || searchIngredients === undefined) {

@@ -6,7 +6,7 @@ import ContainerExplorar from '../components/ContainerExplorar';
 function ExploreFood() {
   return (
     <div>
-      <Header title="Explorar Comida" showSearch={ false } />
+      <Header title="Explorar Comidas" showSearch={ false } />
       <ContainerExplorar type="comidas" />
       <Footer />
     </div>
