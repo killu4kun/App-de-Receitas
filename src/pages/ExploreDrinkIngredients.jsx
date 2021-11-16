@@ -35,7 +35,8 @@ function ExploreDrinkIngredients() {
                 name={ drink.strIngredient1 }
                 type="button"
                 onClick={ ({ target }) => {
-                  getDrinksFromIngredients(target.getAttribute('name'));
+                  getDrinksFromIngredients(target.name);
+                  console.log(target.name);
                   return history.push('/bebidas');
                 } }
               >

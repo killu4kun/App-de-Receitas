@@ -21,7 +21,7 @@ function Explore() {
       <button
         type="button"
         onClick={ () => handleClick('/explorar/bebidas') }
-        data-test-id="explore-drinks"
+        data-testid="explore-drinks"
       >
         Explorar Bebidas
       </button>
