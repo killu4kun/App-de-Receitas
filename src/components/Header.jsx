@@ -1,14 +1,27 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import RecipeContext from '../context/RecipeContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import '../css/header.css';
-import RecipeContext from '../context/RecipeContext';
 
 function Header({ title, showSearch }) {
-  const history = useHistory();
   const { handleSearchButtonClick } = useContext(RecipeContext);
+  const callButton = () => (
+    <button
+      type="button"
+      onClick={ () => handleSearchButtonClick() }
+    >
+      <img
+        src={ searchIcon }
+        alt="Search"
+        data-testid="search-top-btn"
+      />
+    </button>
+  );
+
+  const history = useHistory();
   return (
     <header className="header-container">
       <button
@@ -21,18 +34,9 @@ function Header({ title, showSearch }) {
           data-testid="profile-top-btn"
         />
       </button>
-      <h1 data-testid="page-title">{ title }</h1>
+      <h1 data-testid="page-title">{title}</h1>
       {showSearch
-      && <button
-        type="button"
-        onClick={ () => handleSearchButtonClick() }
-      >
-        <img
-          src={ searchIcon }
-          alt="Search"
-          data-testid="search-top-btn"
-        />
-         </button>}
+        && callButton()}
     </header>
   );
 }

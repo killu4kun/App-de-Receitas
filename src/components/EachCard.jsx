@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function EachCard({ imgsrc, cardName, index, onclick }) {
   return (
@@ -15,5 +16,12 @@ function EachCard({ imgsrc, cardName, index, onclick }) {
     </button>
   );
 }
+
+EachCard.propTypes = {
+  imgsrc: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onclick: PropTypes.func.isRequired,
+};
 
 export default EachCard;

@@ -21,7 +21,7 @@ function Profile() {
       <Header title="Perfil" showSearch={ false } />
       <h1 data-testid="profile-email">
         { retrieveEmail.length !== 0
-        && retrieveEmail.slice(SLICE_EMAIL, retrieveEmail.length - 2) }
+        && retrieveEmail.slice(SLICE_EMAIL, retrieveEmail.length - 2) }      
       </h1>
       <button
         type="button"
@@ -50,5 +50,4 @@ function Profile() {
     </div>
   );
 }
-
 export default Profile;

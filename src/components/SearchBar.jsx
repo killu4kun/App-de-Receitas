@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
-import { Redirect, useLocation } from 'react-router';
-import RecipeContext from '../context/RecipeContext';
-
+import React, { useEffect, useContext } from 'react';
+import { useLocation } from 'react-router';
 import Button from './Button';
+import RecipeContext from '../context/RecipeContext';
 
 function SearchBar() {
   const { setLocationName, handleClick,
@@ -14,7 +13,6 @@ function SearchBar() {
     setLocationName(locationRoute);
   }, []);
 
-  // searchRecipe.length === 1 && <Redirect to={`/${locationName}/${searchRecipe[0].idMeal}`}
   return (
     <section>
       <input
@@ -54,7 +52,7 @@ function SearchBar() {
       <Button
         text="Buscar"
         onClick={ handleClick }
-        dataTestId="exec-search-btn"
+        data-testid="exec-search-btn"
       />
     </section>
   );

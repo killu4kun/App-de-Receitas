@@ -12,8 +12,9 @@ import {
 } from '../services/recipesRequest';
 
 function RecipeProvider({ children }) {
-  const [mealsRecipes, setMealsRecipes] = useState([]);
-  const [drinksRecipes, setDrinksRecipes] = useState([]);
+  const [mealsRecipes, setMealsRecipes] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
@@ -24,6 +25,10 @@ function RecipeProvider({ children }) {
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
   const [recipesDb, setRecipesDb] = useState([]);
+
+  const [recipeID, setRecipeID] = useState('');
+  const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
+  // buscada no retorno da API na pagina de detalhes
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -68,7 +73,7 @@ function RecipeProvider({ children }) {
 
   const handleSearchButtonClick = () => {
     setShowSearchInput(!showSearchBar);
-  }
+  };
 
   const handleInputChange = (value) => {
     setIngredientInput(value);
@@ -99,6 +104,16 @@ function RecipeProvider({ children }) {
   useEffect(() => {
     retrieveFoods();
     retrieveDrinks();
+    async function fetchData() {
+      const mealsResponse = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const baseMeals = await mealsResponse.json();
+      setMealsRecipes(baseMeals);
+      const drinksResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const baseDrinks = await drinksResponse.json();
+      setDrinksRecipes(baseDrinks);
+      setLoading(false);
+    }
+    fetchData();
   }, []);
 
   const contextValue = {
@@ -108,16 +123,23 @@ function RecipeProvider({ children }) {
     drinksIngredients,
     searchIngredients,
     mealsRecipes,
+    drinksRecipes,
     showSearchBar,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
-    // mealsRecipes,
+    loading,
+    setLoading,
+    setRecipeID,
+    setID,
+    recipeID,
+    ID,
   };
 
   console.log(mealsRecipes);
+  console.log(loading);
 
   return (
     <RecipeContext.Provider value={ contextValue }>
