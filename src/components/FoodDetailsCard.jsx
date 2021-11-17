@@ -89,7 +89,7 @@ function FoodDetailCard() {
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comidas') }
+            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />

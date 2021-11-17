@@ -78,7 +78,7 @@ function DrinkDetailsCard() {
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ ({ target }) => handleToShareBtn(target, ID, 'bebidas') }
+            onClick={ ({ target }) => handleToShareBtn(target, ID, 'bebida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />
@@ -86,7 +86,8 @@ function DrinkDetailsCard() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleClick(recipeID, ID, 'bebidas', setHeartChange) }
+
+            onClick={ () => handleClick(recipeID, ID, 'bebida', setHeartChange) }
             text="Favoritar bebida"
             src={ favorited ? BlackHeart : WhiteHeart }
             alt="favoritar"
