@@ -9,7 +9,7 @@ import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg';
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 
-function FoodDetailCard() {
+function DrinkDetailsCard() {
   const { recipeID, ID } = useContext(RecipeContext);
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
@@ -50,6 +50,19 @@ function FoodDetailCard() {
     handleFavoritedBtn(recipe, Id, type, func);
   }
 
+  function handleStartRecipe() {
+    const ingredients = allIngredientsMeasures.map(({ ingredient }) => ingredient);
+    const cocktails = {
+      [ID]: ingredients,
+    };
+    const recipePhoto = {
+      recipeID,
+    };
+    localStorage.setItem('inProgress', JSON.stringify(cocktails));
+    localStorage.setItem('recipeID', JSON.stringify(recipePhoto));
+    history.push(`/bebidas/${ID}/in-progress`);
+  }
+
   return (
     <div>
       <div>
@@ -73,8 +86,11 @@ function FoodDetailCard() {
           <button
             type="button"
             data-testid="favorite-btn"
+
             onClick={ () => handleClick(recipeID, ID, 'bebida', setHeartChange) }
-            text="Favoritar comida"
+            text="Favoritar bebida"
+            src={ favorited ? BlackHeart : WhiteHeart }
+            alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
           </button>
@@ -101,7 +117,7 @@ function FoodDetailCard() {
           <p data-testid="video">video</p>
         </div>
         <div>
-          <h1 data-testid="0-recomendation-title">Recomendadas</h1>
+          <h2 data-testid="0-recomendation-title">Recomendadas</h2>
           {recommendations.length > 1 ? (
             recommendations.map((recommended, index) => (
               index < SIX ? (
@@ -116,7 +132,6 @@ function FoodDetailCard() {
                     <p>{ recommended.strCategory }</p>
                     <p data-testid={ `${index}-recomendation-title` }>
                       {recommended.strMeal}
-
                     </p>
                   </div>
                 </div>
@@ -127,8 +142,9 @@ function FoodDetailCard() {
         <div>
           <button
             type="button"
+            className="btn-start-recipe"
             data-testid="start-recipe-btn"
-            onClick={ () => history.push(`/bebidas/${ID}/in-progress`) }
+            onClick={ () => handleStartRecipe() }
           >
             Iniciar Receita
           </button>
@@ -138,4 +154,4 @@ function FoodDetailCard() {
   );
 }
 
-export default FoodDetailCard;
+export default DrinkDetailsCard;

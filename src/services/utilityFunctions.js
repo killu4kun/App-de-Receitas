@@ -32,6 +32,7 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
     name: recipeID.strDrink || recipeID.strMeal,
     image: recipeID.strDrinkThumb || recipeID.strMealThumb,
   };
+
   if (!localStorage.getItem('favoriteRecipes')) {
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
   }
@@ -48,6 +49,13 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
     func(localRecipes);
     localStorage.setItem('favoriteRecipes', JSON.stringify(localRecipes));
   }
+}
+
+export function handleKeyInLocalStorage(key, id) {
+  const textButton = Object.keys(key).length === 0
+            && !Object.keys(key).contains(id)
+    ? 'Iniciar Receita' : 'Continuar Receita';
+  return textButton;
 }
 
 // The some() method tests whether at least one element in the array passes the test implemented by the provided function

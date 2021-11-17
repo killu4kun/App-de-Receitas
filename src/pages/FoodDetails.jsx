@@ -28,7 +28,6 @@ function FoodDetails(props) {
     }
     fetchMealID();
   }, []);
-
   return (
     <div>
       {recipeID !== '' ? <FoodDetailCard /> : <p>Loading...</p> }

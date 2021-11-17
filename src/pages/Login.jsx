@@ -20,7 +20,7 @@ function Login() {
 
   useEffect(() => {
     const handleValidate = () => {
-      if (isEmailValid(userEmail) && password.length >= PASSWORD_LENGTH) {
+      if (isEmailValid(userEmail) && password.length > PASSWORD_LENGTH) {
         setValidate(true);
       }
     };

@@ -13,6 +13,8 @@ function SearchBar() {
     setLocationName(locationRoute);
   }, []);
 
+  console.log('funcionou');
+
   return (
     <section>
       <input
@@ -52,7 +54,7 @@ function SearchBar() {
       <Button
         text="Buscar"
         onClick={ handleClick }
-        data-testid="exec-search-btn"
+        dataTestId="exec-search-btn"
       />
     </section>
   );

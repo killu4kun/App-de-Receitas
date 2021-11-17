@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import RecipeContext from '../context/RecipeContext';
 import DoneRecipeCards from '../components/DoneRecipeCard';
 
+
 function DoneRecipes() {
   const { setDoneRecipesFilter } = useContext(RecipeContext);
   // nesta pagina iremos definir o valor(estado) do filtro das receitas prontas
