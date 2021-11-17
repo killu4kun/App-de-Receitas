@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../css/foodInProgress.css';
 import { useLocation } from 'react-router';
@@ -9,18 +9,13 @@ const ListIngredients = ({ ingredients }) => {
   const { pathname } = useLocation();
   const regex = /\d+/g;
   const [locationID] = pathname.match(regex);
-  console.log(locationID)
 
-  // useEffect(() => {
-  //   const meals = {
-  //     [locationID]: [compareChecked],
-  //   };
-  //   localStorage.setItem('meals', JSON.stringify(meals));
-  // }, [compareChecked]);
-  // recuperar localStorage
-  // fazer um map em cada ingrediente e transformar
-  // em objeto com a chave checked, id e ingrediente
-  // {}
+  const setLocalStorage = () => {
+    const meals = {
+      [locationID]: [compareChecked],
+    };
+    localStorage.setItem('meals', JSON.stringify(meals));
+  };
 
   const handleCheckboxControl = (index, checked) => {
     setCompareChecked((prevState) => ({
@@ -29,28 +24,20 @@ const ListIngredients = ({ ingredients }) => {
     }));
     setLocalStorage();
   };
-  
-  const setLocalStorage = () => {
-    const meals = {
-      [locationID]: [compareChecked],
-    };
-    localStorage.setItem('meals', JSON.stringify(meals));
-  }
-  
 
   useEffect(() => {
     const handleChecked = () => {
       // retorna true or undefined
-      if(localStorage.getItem('meals')) {
+      if (localStorage.getItem('meals')) {
         const recipe = localStorage.getItem('meals');
         const recipeJSon = JSON.parse(recipe)[locationID];
         const recipeChecked = recipeJSon[0];
         setIsChecked(recipeChecked);
       }
-    }
+    };
+
     handleChecked();
   }, [compareChecked]);
-
 
   return (
     <ol>
