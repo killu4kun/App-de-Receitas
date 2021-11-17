@@ -27,20 +27,22 @@ const ListIngredients = ({ ingredients }) => {
       ...prevState,
       [index]: checked,
     }));
-    setLocalStorage();
   };
-
-  const setLocalStorage = () => {
-    const meals = {
-      [locationID]: [compareChecked],
-    };
-    localStorage.setItem('meals', JSON.stringify(meals));
-  }
+  
+  useEffect(() => {
+    const setLocalStorage = () => {
+      const meals = {
+        [locationID]: [compareChecked],
+      };
+      localStorage.setItem('meals', JSON.stringify(meals));
+    }
+    setLocalStorage();
+  }, [compareChecked]);
 
   useEffect(() => {
     const handleChecked = () => {
       // retorna true or undefined
-      if(localStorage.getItem('meals')){
+      if(localStorage.getItem('meals')) {
         const recipe = localStorage.getItem('meals');
         const recipeJSon = JSON.parse(recipe)[locationID];
         const recipeChecked = recipeJSon[0];
