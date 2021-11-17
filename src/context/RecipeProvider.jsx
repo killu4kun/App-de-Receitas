@@ -46,11 +46,14 @@ function RecipeProvider({ children }) {
     // }
   }, [locationName, searchIngredients, history]);
   const [recipesDb, setRecipesDb] = useState([]);
+
   // const [urlFoods,setUrlFoods] = useState([]);
 
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes
+  const [doneRecipesFilter, setDoneRecipesFilter] = useState(''); // função e estado para armazenar o tipo do filtro 
+  // das receitas prontas/ estado incial filter all
 
   const retrieveFoods = async () => {
     setFoodsCategory(await getAllCategoriesMeal());
@@ -149,6 +152,9 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    doneRecipesFilter,
+    setLocationName,
+    setDoneRecipesFilter,
     recipeInProgress,
     loading,
     recipeID,
