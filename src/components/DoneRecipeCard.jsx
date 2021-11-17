@@ -51,6 +51,8 @@ function DoneRecipeCards() {
               data-testid={ `${index}-horizontal-share-btn` }
               onClick={ ({ target }) => handleToShareBtn(target, recipe.id, recipe.type) }
               text="Compartilhar receita"
+              src={ ShareIcon }
+              alt="compartilhar receita"
             >
               <img src={ ShareIcon } alt="compartilhar" />
             </button>

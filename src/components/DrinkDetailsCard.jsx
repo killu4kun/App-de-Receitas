@@ -86,7 +86,6 @@ function DrinkDetailsCard() {
           <button
             type="button"
             data-testid="favorite-btn"
-
             onClick={ () => handleClick(recipeID, ID, 'bebida', setHeartChange) }
             text="Favoritar bebida"
             src={ favorited ? BlackHeart : WhiteHeart }

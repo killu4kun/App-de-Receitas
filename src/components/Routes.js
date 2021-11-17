@@ -18,7 +18,6 @@ import DrinkDetails from '../pages/DrinkDetails';
 import DoneRecipes from '../pages/DoneRecipes';
 import NotFound from '../pages/NotFound';
 
-
 export default function Routes() {
   return (
     <Switch>
@@ -57,8 +56,6 @@ export default function Routes() {
       <Route path="/bebidas/:id" component={ DrinkDetails } />
       <Route path="/receitas-feitas" component={ DoneRecipes } />
       <Route path="/explorar/bebidas/area" component={ NotFound } />
-
-
     </Switch>
   );
 }
