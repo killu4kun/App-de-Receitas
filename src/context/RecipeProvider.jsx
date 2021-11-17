@@ -76,10 +76,12 @@ function RecipeProvider({ children }) {
 
   const handleInputChange = (value) => {
     setIngredientInput(value);
+    console.log(('input change'), value);
   };
 
   const handleRadioChange = (value) => {
     setRadioSelected(value);
+    console.log('radio change', value);
   };
 
   const handleClick = () => {
@@ -137,7 +139,8 @@ function RecipeProvider({ children }) {
     ID,
   };
 
-  console.log(mealsRecipes);
+  console.log(('mealRecipes :'), mealsRecipes);
+  console.log(('searchIngredients :'), searchIngredients);
   console.log(loading);
 
   return (

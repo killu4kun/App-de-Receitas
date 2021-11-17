@@ -55,8 +55,8 @@ export default function Routes() {
       <Route exact path="/receitas-feitas" component={ DoneRecipes } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
 
-      <Route path="/comidas/:id" component={ FoodDetails } />
-      <Route path="/bebidas/:id" component={ DrinkDetails } />
+      <Route exact path="/comidas/:id" component={ FoodDetails } />
+      <Route exact path="/bebidas/:id" component={ DrinkDetails } />
 
     </Switch>
   );
