@@ -22,7 +22,6 @@ const ListIngredients = ({ ingredients }) => {
   // em objeto com a chave checked, id e ingrediente
   // {}
 
-
   const handleCheckboxControl = (index, checked) => {
     setCompareChecked((prevState) => ({
       ...prevState,
