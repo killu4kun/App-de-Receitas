@@ -31,6 +31,12 @@ function FoodInProgress() {
   const recipePhoto = recipeForPhoto !== null && recipeForPhoto.length !== 0
     ? Object.values(recipeForPhoto)[0].strMealThumb : [];
 
+  const recipeTitle = recipeForPhoto !== null && recipeForPhoto.length !== 0
+    ? Object.values(recipeForPhoto)[0].strMeal : [];
+
+  const recipeCategory = recipeForPhoto !== null && recipeForPhoto.length !== 0
+    ? Object.values(recipeForPhoto)[0].strCategory : [];
+
   const ingredient = currentRecipe !== null && currentRecipe.length !== 0
     ? Object.values(currentRecipe)[0] : [];
 
@@ -38,6 +44,7 @@ function FoodInProgress() {
     handleFavoritedBtn(recipe, Id, type, func);
   };
 
+  console.log(recipeForPhoto)
   // text-decoration: line-through;
 
   return (
@@ -48,15 +55,15 @@ function FoodInProgress() {
           data-testid="recipe-photo"
           alt="comida em progresso"
         />
-        <h1 data-testid="recipe-title"> Comida em progresso </h1>
+        <h1 data-testid="recipe-title"> { `Prato: ${recipeTitle}` }</h1>
       </header>
       <main>
-        <h4 data-testid="recipe-category">categoria da receita</h4>
+        <h4 data-testid="recipe-category">{ `Categoria da receita: ${recipeCategory}` }</h4>
         <div>
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comidas') }
+            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />

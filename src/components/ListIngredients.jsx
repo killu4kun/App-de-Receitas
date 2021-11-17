@@ -1,30 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-// import RecipeContext from '../context/RecipeContext';
 import '../css/foodInProgress.css';
+import { useLocation } from 'react-router';
 
 const ListIngredients = ({ ingredients }) => {
   const [compareChecked, setCompareChecked] = useState({});
-  // const [retrieveIndex, setRetrieveIndex] = useState(0);
-  // const { ID } = useContext(RecipeContext);
+  const [isChecked, setIsChecked] = useState({});
+  const { pathname } = useLocation();
+  const regex = /\d+/g;
+  const [locationID] = pathname.match(regex);
+  console.log(locationID)
+
   // useEffect(() => {
   //   const meals = {
-  //     [ID]: ID ? { ingredients, index: retrieveIndex } : ingredients,
+  //     [locationID]: [compareChecked],
   //   };
   //   localStorage.setItem('meals', JSON.stringify(meals));
-  // }, [compareChecked, retrieveIndex, ID, ingredients]);
-
+  // }, [compareChecked]);
   // recuperar localStorage
   // fazer um map em cada ingrediente e transformar
   // em objeto com a chave checked, id e ingrediente
   // {}
+
 
   const handleCheckboxControl = (index, checked) => {
     setCompareChecked((prevState) => ({
       ...prevState,
       [index]: checked,
     }));
+    setLocalStorage();
   };
+
+  const setLocalStorage = () => {
+    const meals = {
+      [locationID]: [compareChecked],
+    };
+    localStorage.setItem('meals', JSON.stringify(meals));
+  }
+
+  useEffect(() => {
+    const handleChecked = () => {
+      // retorna true or undefined
+      if(localStorage.getItem('meals')){
+        const recipe = localStorage.getItem('meals');
+        const recipeJSon = JSON.parse(recipe)[locationID];
+        const recipeChecked = recipeJSon[0];
+        setIsChecked(recipeChecked);
+      }
+    }
+    handleChecked();
+  }, [compareChecked]);
+
 
   return (
     <ol>
@@ -34,13 +60,13 @@ const ListIngredients = ({ ingredients }) => {
           key={ index }
         >
           <label
-            className={ compareChecked[index] ? 'decoration' : null }
+            className={ isChecked[index] ? 'decoration' : null }
             htmlFor={ `${index}-ingredients-checkbox` }
           >
             <input
               id={ `${index}-ingredients-checkbox` }
               type="checkbox"
-              // checked={ checkboxControl }
+              checked={ isChecked[index] }
               onChange={ ({ target: { checked } }) => {
                 handleCheckboxControl(index, checked);
               } }
