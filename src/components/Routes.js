@@ -57,7 +57,6 @@ export default function Routes() {
       <Route path="/bebidas/:id" component={ DrinkDetails } />
       <Route path="/explorar/bebidas/area" component={ NotFound } />
 
-
     </Switch>
   );
 }

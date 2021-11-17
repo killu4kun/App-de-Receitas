@@ -7,11 +7,12 @@ function EveryDrinkCard() {
   const { drinksRecipes: { drinks }, searchIngredients } = useContext(RecipeContext);
 
   const maxResults = 12;
-  if (!drinks) {
+  if (!drinks && !searchIngredients) {
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     return <p>Nenhum resultado encontrado</p>;
   }
-  const everyRecipeSearched = Object.values(searchIngredients).slice(0, maxResults);
+  const everyRecipeSearched = searchIngredients === null
+    ? [] : searchIngredients.slice(0, maxResults);
   const everyRecipe = Object.values(drinks).slice(0, maxResults);
   const everyCard = everyRecipe
     .map((recipe, index) => (
