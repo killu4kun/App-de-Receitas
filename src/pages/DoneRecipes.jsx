@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeContext from '../context/RecipeContext';
 import DoneRecipeCards from '../components/DoneRecipeCard';
-
 
 function DoneRecipes() {
   const { setDoneRecipesFilter } = useContext(RecipeContext);
