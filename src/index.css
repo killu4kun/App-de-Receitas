@@ -41,3 +41,7 @@ footer > button {
   margin: auto 0;
 }
 
+.btn-start-recipe {
+  position: fixed;
+  bottom: 0;
+}
