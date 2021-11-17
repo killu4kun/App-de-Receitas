@@ -13,7 +13,8 @@ function EveryMealCard() {
     return <p>Nenhum resultado encontrado</p>;
   }
   const everyRecipe = Object.values(meals).slice(0, maxResults);
-  const everyRecipeSearched = searchIngredients === null ? [] : searchIngredients.slice(0, maxResults);
+  const everyRecipeSearched = searchIngredients === null
+    ? [] : searchIngredients.slice(0, maxResults);
   const everyCard = everyRecipe
     .map((recipe, index) => (
       <div

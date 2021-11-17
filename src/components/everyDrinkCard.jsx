@@ -11,7 +11,8 @@ function EveryDrinkCard() {
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     return <p>Nenhum resultado encontrado</p>;
   }
-  const everyRecipeSearched = searchIngredients === null ? [] : searchIngredients.slice(0, maxResults);
+  const everyRecipeSearched = searchIngredients === null
+    ? [] : searchIngredients.slice(0, maxResults);
   const everyRecipe = Object.values(drinks).slice(0, maxResults);
   const everyCard = everyRecipe
     .map((recipe, index) => (

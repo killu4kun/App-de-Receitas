@@ -149,6 +149,7 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    recipeInProgress,
     loading,
     recipeID,
     recipesDb,
