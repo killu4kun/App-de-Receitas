@@ -8,12 +8,12 @@ function EveryMealCard() {
   // const { ID } = useContext(RecipeContext);
 
   const maxResults = 12;
-  if (!meals && searchIngredients.length < 1) {
+  if (!meals && !searchIngredients) {
     global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     return <p>Nenhum resultado encontrado</p>;
   }
   const everyRecipe = Object.values(meals).slice(0, maxResults);
-  const everyRecipeSearched = Object.values(searchIngredients).slice(0, maxResults);
+  const everyRecipeSearched = searchIngredients === null ? [] : searchIngredients.slice(0, maxResults);
   const everyCard = everyRecipe
     .map((recipe, index) => (
       <div

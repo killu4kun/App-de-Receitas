@@ -164,9 +164,9 @@ function RecipeProvider({ children }) {
     handleRadioChange,
     handleSearchButtonClick,
   };
-  console.log(('mealRecipes :'), mealsRecipes);
+  // console.log(('mealRecipes :'), mealsRecipes);
   console.log(('searchIngredients :'), searchIngredients);
-  console.log(loading);
+  // console.log(loading);
 
   return (
     <RecipeContext.Provider value={ contextValue }>
