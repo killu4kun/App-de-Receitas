@@ -13,7 +13,9 @@ import {
 
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
+  const [filteredCategory, setFilteredCategory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
   const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
@@ -30,13 +32,17 @@ function RecipeProvider({ children }) {
   // buscada no retorno da API na pagina de detalhes
 
   const retrieveFoods = async () => {
+    // console.log(("true"),setLoadingCategories);
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
+    if (drinksCategories.length > 0 && foodsCategories.length > 0) { setLoadingCategories(false); }
+    // console.log(("false"),setLoadingCategories);
   };
 
   const retrieveDrinks = async () => {
     setDrinksCategories(await getAllCategoriesDrinks());
     setDrinksIngredients(await getAllIngredientsDrinks());
+    if (drinksCategories.length > 0 && foodsCategories.length > 0) { setLoadingCategories(false); }
   };
 
   const retrieveSearchedRecipeByIngredient = async () => {
@@ -47,7 +53,6 @@ function RecipeProvider({ children }) {
       ),
     );
   };
-
   const retrieveSearchedRecipeByName = async () => {
     setSearchIngredients(
       await getRecipeByName(
@@ -62,7 +67,7 @@ function RecipeProvider({ children }) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       setSearchIngredients(
-        await getRecipeByFirstLetter(
+        await getRecipeByName(
           locationName,
           ingredientInput,
         ),
@@ -84,6 +89,18 @@ function RecipeProvider({ children }) {
     console.log('radio change', value);
   };
 
+  const handleCategorySelected = async (location, categoria) => {
+    setFilteredCategory(
+      await getRecipeByName(
+        location,
+        categoria,
+      ),
+    );
+    setSearchIngredients([]);
+    // console.log(('category selected'), clickedCategory)
+  };
+
+  console.log(('Filtered Category'), filteredCategory);
   const handleClick = () => {
     switch (radioSelected) {
     case 'ingredient':
@@ -99,6 +116,7 @@ function RecipeProvider({ children }) {
       return 0;
     }
     setShowSearchInput(false);
+    setFilteredCategory([]);
   };
 
   // didMount da massa
@@ -116,8 +134,10 @@ function RecipeProvider({ children }) {
     }
     fetchData();
   }, []);
-
+  console.log(('filteredCategory2'), filteredCategory);
   const contextValue = {
+    filteredCategory,
+    loadingCategories,
     foodsCategories,
     foodsIngredients,
     drinksCategories,
@@ -126,6 +146,7 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    handleCategorySelected,
     handleClick,
     handleInputChange,
     handleRadioChange,

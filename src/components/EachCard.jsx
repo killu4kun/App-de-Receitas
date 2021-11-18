@@ -8,9 +8,9 @@ function EachCard({ imgsrc, cardName, index, onclick }) {
         className="foodImage"
         src={ imgsrc }
         alt="Recipe thumbnail"
-        data-testid={ `${index}-card-img` }
+        data-testid={ index+"-card-img" }
       />
-      <p data-testid={ `${index}-card-name` }>
+      <p data-testid={ index+"-card-name" }>
         { cardName }
       </p>
     </button>
