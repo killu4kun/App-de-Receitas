@@ -44,7 +44,6 @@ function FoodInProgress() {
     handleFavoritedBtn(recipe, Id, type, func);
   };
 
-  console.log(recipeForPhoto)
   // text-decoration: line-through;
 
   return (
@@ -55,10 +54,14 @@ function FoodInProgress() {
           data-testid="recipe-photo"
           alt="comida em progresso"
         />
-        <h1 data-testid="recipe-title"> { `Prato: ${recipeTitle}` }</h1>
+        <h1 data-testid="recipe-title">
+          { `Prato: ${recipeTitle}` }
+        </h1>
       </header>
       <main>
-        <h4 data-testid="recipe-category">{ `Categoria da receita: ${recipeCategory}` }</h4>
+        <h4 data-testid="recipe-category">
+          { `Categoria da receita: ${recipeCategory}` }
+        </h4>
         <div>
           <button
             type="button"
