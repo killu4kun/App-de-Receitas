@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import PropTypes from 'prop-types';
+import { setDate } from '../services/utilityFunctions';
 import '../css/foodInProgress.css';
 import Button from './Button';
 
@@ -13,16 +14,14 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
   const handleChecked = () => {
     // retorna true or undefined
     if (localStorage.getItem('meals')) {
-      const recipe = localStorage.getItem('inProgress');
-      if (JSON.parse(localStorage.getItem('meals'))[locationID] === locationID) {
-        const recipeJSon = JSON.parse(recipe)[locationID];
-        const recipeChecked = recipeJSon[0];
-        return recipeChecked;
-      }
+      const recipe = localStorage.getItem('meals');
+      const recipeJSon = JSON.parse(recipe)[locationID];
+      const recipeChecked = recipeJSon[0];
+      return recipeChecked;
     }
-    return {};
   };
-  const [compareChecked, setCompareChecked] = useState(handleChecked());
+  const [compareChecked, setCompareChecked] = useState(handleChecked() !== undefined
+    ? handleChecked() : {});
   const [disabled, setDisabled] = useState(true);
   const [arrayForLocalStorage, setArrayForLocalStorage] = useState([]);
 
@@ -54,36 +53,30 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
       [index]: checked,
     }));
   };
+  console.log(recipeForLocalStorage);
 
-  const setDate = () => {
-    // implementação da data obtida através de código visto em:
-    // https://www.horadecodar.com.br/2021/04/03/como-pegar-a-data-atual-com-javascript/
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const presentDate = `${day}/${month}/${year}`;
-    return presentDate;
-  };
   const handleRedirect = () => {
     const currentRecipeMeal = {
       id: locationID,
       type: pathname.slice(1, SLICE_ROUTE),
-      area: recipeForLocalStorage.srtArea ? recipeForLocalStorage.srtArea : '',
-      category: recipeForLocalStorage.srtCategory
-        ? recipeForLocalStorage.srtCategory : '',
-      alcoholicOrNot: recipeForLocalStorage.srtAlcoholic
-        ? recipeForLocalStorage.srtAlcoholic : '',
-      name: recipeForLocalStorage.srtMeal,
+      area: recipeForLocalStorage.strArea ? recipeForLocalStorage.strArea : '',
+      category: recipeForLocalStorage.strCategory
+        ? recipeForLocalStorage.strCategory : '',
+      alcoholicOrNot: recipeForLocalStorage.strAlcoholic
+        ? recipeForLocalStorage.strAlcoholic : '',
+      name: recipeForLocalStorage.strMeal,
       image: recipeForLocalStorage.strMealThumb,
       doneDate: setDate(),
-      tags: recipeForLocalStorage.srtTags === null
-        ? [] : recipeForLocalStorage.srtTags,
+      tags: recipeForLocalStorage.strTags === null
+        ? [] : recipeForLocalStorage.strTags,
     };
+    console.log(currentRecipeMeal);
     setArrayForLocalStorage((prevState) => [...prevState, currentRecipeMeal]);
 
     history.push('/receitas-feitas');
   };
+
+  console.log(arrayForLocalStorage);
 
   return (
     <>
@@ -124,7 +117,7 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
 
 ListIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  recipeForLocalStorage: PropTypes.objectOf(PropTypes.string).isRequired,
+  recipeForLocalStorage: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default ListIngredients;

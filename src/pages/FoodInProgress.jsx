@@ -78,7 +78,7 @@ function FoodInProgress() {
         </div>
         <h4 data-testid="instructions">Instruções de preparo</h4>
         <ListIngredients
-          recipeForLocalStorage={ recipeForPhoto }
+          recipeForLocalStorage={ Object.values(recipeForPhoto)[0] }
           ingredients={ ingredient }
         />
       </main>
