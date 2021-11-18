@@ -16,7 +16,8 @@ const ListIngredients = ({ ingredients }) => {
       return recipeChecked;
     }
   };
-  const [compareChecked, setCompareChecked] = useState(localStorage.getItem('meals') ? handleChecked() : {});
+  const [compareChecked, setCompareChecked] = useState(localStorage.getItem('meals')
+    ? handleChecked() : {});
 
   useEffect(() => {
     const setLocalStorage = () => {
