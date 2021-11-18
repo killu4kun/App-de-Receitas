@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Button,
   Container,
   Form,
-  Row,
   Col,
 } from 'react-bootstrap';
 
@@ -80,15 +79,18 @@ function Login() {
               </Form.Text>
               ) }
           </Form.Group>
-          <Button
-            style={ { cursor: 'pointer' } }
-            variant={ !validate ? 'danger' : 'primary' }
-            dataTestId="login-submit-btn"
-            disabled={ !validate }
-            onClick={ () => handleClick() }
-          >
-            Logar
-          </Button>
+          <section className="d-grid gap-2">
+            <Button
+              size="lg"
+              style={ { cursor: 'pointer' } }
+              variant={ !validate ? 'danger' : 'primary' }
+              dataTestId="login-submit-btn"
+              disabled={ !validate }
+              onClick={ () => handleClick() }
+            >
+              Logar
+            </Button>
+          </section>
         </Form>
 
       </Col>

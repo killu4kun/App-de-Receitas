@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
-import '../css/foods.css';
 import RecipeContext from '../context/RecipeContext';
-import EveryMealCard from '../components/everyMealCard';
+import EveryMealCard from '../components/EveryMealCard';
 
 function Food() {
   const { loading,
