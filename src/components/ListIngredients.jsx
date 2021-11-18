@@ -13,14 +13,16 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
   const handleChecked = () => {
     // retorna true or undefined
     if (localStorage.getItem('meals')) {
-      const recipe = localStorage.getItem('meals');
-      const recipeJSon = JSON.parse(recipe)[locationID];
-      const recipeChecked = recipeJSon[0];
-      return recipeChecked;
+      const recipe = localStorage.getItem('inProgress');
+      if (JSON.parse(localStorage.getItem('meals'))[locationID] === locationID) {
+        const recipeJSon = JSON.parse(recipe)[locationID];
+        const recipeChecked = recipeJSon[0];
+        return recipeChecked;
+      }
     }
+    return {};
   };
-  const [compareChecked, setCompareChecked] = useState(handleChecked() !== undefined
-    ? handleChecked() : {});
+  const [compareChecked, setCompareChecked] = useState(handleChecked());
   const [disabled, setDisabled] = useState(true);
   const [arrayForLocalStorage, setArrayForLocalStorage] = useState([]);
 
@@ -78,7 +80,7 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
       tags: recipeForLocalStorage.srtTags === null
         ? [] : recipeForLocalStorage.srtTags,
     };
-    setArrayForLocalStorage(currentRecipeMeal);
+    setArrayForLocalStorage((prevState) => [...prevState, currentRecipeMeal]);
 
     history.push('/receitas-feitas');
   };
