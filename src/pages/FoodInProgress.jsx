@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { useHistory } from 'react-router';
-
-import Button from '../components/Button';
 import ListIngredients from '../components/ListIngredients';
 import RecipeContext from '../context/RecipeContext';
 import { handleFavoritedBtn,
@@ -17,7 +14,6 @@ function FoodInProgress() {
   const [heartChange, setHeartChange] = useState('');
   const [currentRecipe, setCurrentRecipe] = useState([]);
   const [recipeForPhoto, setRecipeForPhoto] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     setFavorited(favoritedItem(ID));
@@ -26,7 +22,7 @@ function FoodInProgress() {
   useEffect(() => {
     setCurrentRecipe(JSON.parse(localStorage.getItem('inProgress')));
     setRecipeForPhoto(JSON.parse(localStorage.getItem('recipeID')));
-  }, []);
+  }, [ID]);
 
   const recipePhoto = recipeForPhoto !== null && recipeForPhoto.length !== 0
     ? Object.values(recipeForPhoto)[0].strMealThumb : [];
@@ -81,15 +77,11 @@ function FoodInProgress() {
           </button>
         </div>
         <h4 data-testid="instructions">Instruções de preparo</h4>
-        <ListIngredients ingredients={ ingredient } />
-      </main>
-      <footer>
-        <Button
-          text="Finalizar receita"
-          dataTestId="finish-recipe-btn"
-          onClick={ () => history.push('/receitas-feitas') }
+        <ListIngredients
+          recipeForLocalStorage={ recipeForPhoto }
+          ingredients={ ingredient }
         />
-      </footer>
+      </main>
     </div>
   );
 }

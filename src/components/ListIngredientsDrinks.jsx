@@ -5,16 +5,16 @@ import '../css/foodInProgress.css';
 import Button from './Button';
 
 const SLICE_ROUTE = 8;
-const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
+const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const regex = /\d+/g;
   const [locationID] = pathname.match(regex);
   const handleChecked = () => {
     // retorna true or undefined
-    if (localStorage.getItem('meals')) {
+    if (localStorage.getItem('cocktails')) {
       const recipe = localStorage.getItem('inProgress');
-      if (JSON.parse(localStorage.getItem('meals'))[locationID] === locationID) {
+      if (JSON.parse(localStorage.getItem('cocktails'))[locationID] === locationID) {
         const recipeJSon = JSON.parse(recipe)[locationID];
         const recipeChecked = recipeJSon[0];
         return recipeChecked;
@@ -34,11 +34,12 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
 
   useEffect(() => {
     const setLocalStorage = () => {
-      const meals = {
+      const cocktails = {
         [locationID]: [compareChecked],
       };
-      localStorage.setItem('meals', JSON.stringify(meals));
+      localStorage.setItem('cocktails', JSON.stringify(cocktails));
     };
+
     setLocalStorage();
   }, [compareChecked, locationID, pathname]);
 
@@ -66,21 +67,21 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
     return presentDate;
   };
   const handleRedirect = () => {
-    const currentRecipeMeal = {
-      id: locationID,
+    const currentRecipeDrink = {
+      id: recipeForLocalStorage.idDrink,
       type: pathname.slice(1, SLICE_ROUTE),
       area: recipeForLocalStorage.srtArea ? recipeForLocalStorage.srtArea : '',
       category: recipeForLocalStorage.srtCategory
         ? recipeForLocalStorage.srtCategory : '',
       alcoholicOrNot: recipeForLocalStorage.srtAlcoholic
         ? recipeForLocalStorage.srtAlcoholic : '',
-      name: recipeForLocalStorage.srtMeal,
-      image: recipeForLocalStorage.strMealThumb,
+      name: recipeForLocalStorage.srtDrink,
+      image: recipeForLocalStorage.strDrinkThumb,
       doneDate: setDate(),
       tags: recipeForLocalStorage.srtTags === null
         ? [] : recipeForLocalStorage.srtTags,
     };
-    setArrayForLocalStorage((prevState) => [...prevState, currentRecipeMeal]);
+    setArrayForLocalStorage((prevState) => [...prevState, currentRecipeDrink]);
 
     history.push('/receitas-feitas');
   };
@@ -122,9 +123,9 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
   );
 };
 
-ListIngredients.propTypes = {
+ListIngredientsDrink.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   recipeForLocalStorage: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default ListIngredients;
+export default ListIngredientsDrink;

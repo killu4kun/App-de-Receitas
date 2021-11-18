@@ -1,9 +1,87 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
+import RecipeContext from '../context/RecipeContext';
+import { handleFavoritedBtn,
+  favoritedItem, handleToShareBtn } from '../services/utilityFunctions';
+import ShareIcon from '../images/shareIcon.svg';
+import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
+import WhiteHeart from '../images/whiteHeartIcon.svg';
+import ListIngredientsDrink from '../components/ListIngredientsDrinks';
 
 function DrinkInProgress() {
+  const { recipeID, ID } = useContext(RecipeContext);
+  const [favorited, setFavorited] = useState(false);
+  const [heartChange, setHeartChange] = useState('');
+  const [currentRecipe, setCurrentRecipe] = useState([]);
+  const [recipeForPhoto, setRecipeForPhoto] = useState([]);
+
+  useEffect(() => {
+    setFavorited(favoritedItem(ID));
+  }, [heartChange, ID]);
+
+  useEffect(() => {
+    setCurrentRecipe(JSON.parse(localStorage.getItem('inProgress')));
+    setRecipeForPhoto(JSON.parse(localStorage.getItem('recipeID')));
+  }, [ID]);
+
+  const recipePhoto = recipeForPhoto !== null && recipeForPhoto.length !== 0
+    ? Object.values(recipeForPhoto)[0].strDrinkThumb : [];
+
+  const recipeTitle = recipeForPhoto !== null && recipeForPhoto.length !== 0
+    ? Object.values(recipeForPhoto)[0].strDrink : [];
+
+  const recipeCategory = recipeForPhoto !== null && recipeForPhoto.length !== 0
+    ? Object.values(recipeForPhoto)[0].strCategory : [];
+
+  const ingredient = currentRecipe !== null && currentRecipe.length !== 0
+    ? Object.values(currentRecipe)[0] : [];
+
+  const handleFavoritedClick = (recipe, Id, type, func) => {
+    handleFavoritedBtn(recipe, Id, type, func);
+  };
+
+  // text-decoration: line-through;
+
   return (
     <div>
-      <h1> DrinkInProgress </h1>
+      <header>
+        <img
+          src={ recipePhoto }
+          data-testid="recipe-photo"
+          alt="comida em progresso"
+        />
+        <h1 data-testid="recipe-title">
+          { `Prato: ${recipeTitle}` }
+        </h1>
+      </header>
+      <main>
+        <h4 data-testid="recipe-category">
+          { `Categoria da receita: ${recipeCategory}` }
+        </h4>
+        <div>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
+            text="Compartilhar receita"
+          >
+            <img src={ ShareIcon } alt="compartilhar" />
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => handleFavoritedClick(recipeID, ID, 'comida', setHeartChange) }
+            text="Favoritar comida"
+          >
+            <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
+          </button>
+        </div>
+        <h4 data-testid="instructions">Instruções de preparo</h4>
+        <ListIngredientsDrink
+          recipeForLocalStorage={ recipeForPhoto }
+          ingredients={ ingredient }
+        />
+      </main>
     </div>
   );
 }
