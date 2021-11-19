@@ -12,7 +12,7 @@ import {
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
-// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+// const MAX_SEARCH_INGREDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
   const [mealsRecipes, setMealsRecipes] = useState({});
@@ -48,7 +48,6 @@ function RecipeProvider({ children }) {
   const [recipesDb, setRecipesDb] = useState([]);
 
   // const [urlFoods,setUrlFoods] = useState([]);
-
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes
