@@ -48,7 +48,6 @@ function RecipeProvider({ children }) {
   const [recipesDb, setRecipesDb] = useState([]);
 
   // const [urlFoods,setUrlFoods] = useState([]);
-
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes

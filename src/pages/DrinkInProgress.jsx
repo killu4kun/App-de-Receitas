@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
+import { useLocation } from 'react-router';
 import RecipeContext from '../context/RecipeContext';
 import { handleFavoritedBtn,
   favoritedItem, handleToShareBtn } from '../services/utilityFunctions';
@@ -8,61 +9,76 @@ import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 import ListIngredientsDrink from '../components/ListIngredientsDrinks';
 
-function DrinkInProgress() {
-  const { recipeID, ID } = useContext(RecipeContext);
+const totalIngredients = 16;
+const BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+
+function FoodInProgress() {
+  const { recipeID } = useContext(RecipeContext);
   const [favorited, setFavorited] = useState(false);
+  const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [heartChange, setHeartChange] = useState('');
-  const [currentRecipe, setCurrentRecipe] = useState([]);
-  const [recipeForPhoto, setRecipeForPhoto] = useState([]);
+  const [currentRecipe, setCurrentRecipe] = useState({});
+  const { pathname } = useLocation();
+  const regex = /\d+/g;
+  const [locationID] = pathname.match(regex);
 
   useEffect(() => {
-    setFavorited(favoritedItem(ID));
-  }, [heartChange, ID]);
+    setFavorited(favoritedItem(locationID));
+  }, [heartChange, locationID]);
+
+  const recipe = useCallback(async () => {
+    const response = await fetch(
+      `${BASE_URL}${locationID}`,
+    );
+    const { drinks } = await response.json();
+    setCurrentRecipe(drinks[0]);
+  }, [locationID]);
 
   useEffect(() => {
-    setCurrentRecipe(JSON.parse(localStorage.getItem('inProgress')));
-    setRecipeForPhoto(JSON.parse(localStorage.getItem('recipeID')));
-  }, [ID]);
+    recipe();
+  }, [recipe]);
 
-  const recipePhoto = recipeForPhoto !== null && recipeForPhoto.length !== 0
-    ? Object.values(recipeForPhoto)[0].strDrinkThumb : [];
+  useEffect(() => {
+    function getIngredientsAndMeasures() {
+      const ingredientsAndMeasures = [];
+      for (let index = 1; index < totalIngredients; index += 1) {
+        const ingredient = currentRecipe[`strIngredient${index}`]; // pega os resultados da api. resultados da api amarzenados em recipeId
+        const measure = currentRecipe[`strMeasure${index}`]; // recebe a api com o id da seleção e passa estado global que retorna aqui
+        if (ingredient) {
+          ingredientsAndMeasures.push({ ingredient, measure });
+        }
+      }
+      setAllIngredientsMeasures(ingredientsAndMeasures); // retorna os ingredientes e quantidades com base no id da receita selecionada
+    }
+    getIngredientsAndMeasures();
+  }, [currentRecipe]);
+  const ingredients = allIngredientsMeasures.map(({ ingredient }) => ingredient);
 
-  const recipeTitle = recipeForPhoto !== null && recipeForPhoto.length !== 0
-    ? Object.values(recipeForPhoto)[0].strDrink : [];
-
-  const recipeCategory = recipeForPhoto !== null && recipeForPhoto.length !== 0
-    ? Object.values(recipeForPhoto)[0].strCategory : [];
-
-  const ingredient = currentRecipe !== null && currentRecipe.length !== 0
-    ? Object.values(currentRecipe)[0] : [];
-
-  const handleFavoritedClick = (recipe, Id, type, func) => {
-    handleFavoritedBtn(recipe, Id, type, func);
+  const handleFavoritedClick = (recipes, Id, type, func) => {
+    handleFavoritedBtn(recipes, Id, type, func);
   };
 
-  // text-decoration: line-through;
-
-  return (
-    <div>
+  const renderPage = () => (
+    <>
       <header>
         <img
-          src={ recipePhoto }
+          src={ currentRecipe.strDrinkThumb }
           data-testid="recipe-photo"
           alt="comida em progresso"
         />
         <h1 data-testid="recipe-title">
-          { `Prato: ${recipeTitle}` }
+          { `Prato: ${currentRecipe.strDrink}` }
         </h1>
       </header>
       <main>
         <h4 data-testid="recipe-category">
-          { `Categoria da receita: ${recipeCategory}` }
+          { `Categoria da receita: ${currentRecipe.strCategory}` }
         </h4>
         <div>
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
+            onClick={ ({ target }) => handleToShareBtn(target, locationID, 'bebida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />
@@ -70,7 +86,8 @@ function DrinkInProgress() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleFavoritedClick(recipeID, ID, 'comida', setHeartChange) }
+            onClick={ () => handleFavoritedClick(recipeID, locationID,
+              'bebida', setHeartChange) }
             text="Favoritar comida"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
@@ -78,12 +95,21 @@ function DrinkInProgress() {
         </div>
         <h4 data-testid="instructions">Instruções de preparo</h4>
         <ListIngredientsDrink
-          recipeForLocalStorage={ recipeForPhoto }
-          ingredients={ ingredient }
+          recipeForLocalStorage={ currentRecipe }
+          ingredients={ ingredients }
         />
       </main>
+    </>
+  );
+  // text-decoration: line-through;
+  console.log(currentRecipe);
+  return (
+    <div>
+      {Object.values(currentRecipe).length === 0
+        ? <span>Loading....</span>
+        : renderPage()}
     </div>
   );
 }
 
-export default DrinkInProgress;
+export default FoodInProgress;

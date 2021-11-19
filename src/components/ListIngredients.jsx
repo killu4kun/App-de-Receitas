@@ -13,17 +13,18 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
   const [locationID] = pathname.match(regex);
   const handleChecked = () => {
     // retorna true or undefined
-    if (localStorage.getItem('meals')) {
-      const recipe = localStorage.getItem('meals');
-      const recipeJSon = JSON.parse(recipe)[locationID];
-      const recipeChecked = recipeJSon[0];
+    if (localStorage.getItem('inProgressRecipes')) {
+      const recipe = localStorage.getItem('inProgressRecipes');
+      const { meals } = JSON.parse(recipe);
+      const [recipeChecked] = meals[locationID];
       return recipeChecked;
     }
+    return {};
   };
-  const [compareChecked, setCompareChecked] = useState(handleChecked() !== undefined
-    ? handleChecked() : {});
+
+  const [compareChecked, setCompareChecked] = useState(handleChecked());
   const [disabled, setDisabled] = useState(true);
-  const [arrayForLocalStorage, setArrayForLocalStorage] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
     setDisabled(Object.values(compareChecked)
@@ -36,16 +37,17 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
       const meals = {
         [locationID]: [compareChecked],
       };
-      localStorage.setItem('meals', JSON.stringify(meals));
+      localStorage.setItem('inProgressRecipes', JSON.stringify({ meals }));
     };
     setLocalStorage();
   }, [compareChecked, locationID, pathname]);
 
-  console.log(arrayForLocalStorage);
-
   useEffect(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(arrayForLocalStorage));
-  }, [arrayForLocalStorage]);
+    if (localStorage.getItem('doneRecipes')) {
+      const done = localStorage.getItem('doneRecipes');
+      setDoneRecipes(JSON.parse(done));
+    }
+  }, []);
 
   const handleCheckboxControl = (index, checked) => {
     setCompareChecked((prevState) => ({
@@ -53,7 +55,6 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
       [index]: checked,
     }));
   };
-  console.log(recipeForLocalStorage);
 
   const handleRedirect = () => {
     const currentRecipeMeal = {
@@ -67,16 +68,13 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
       name: recipeForLocalStorage.strMeal,
       image: recipeForLocalStorage.strMealThumb,
       doneDate: setDate(),
-      tags: recipeForLocalStorage.strTags === null
-        ? [] : recipeForLocalStorage.strTags,
+      tags: [recipeForLocalStorage.strTags],
     };
-    console.log(currentRecipeMeal);
-    setArrayForLocalStorage((prevState) => [...prevState, currentRecipeMeal]);
-
+    localStorage.setItem('doneRecipes',
+      JSON.stringify([...doneRecipes, currentRecipeMeal]));
+    // localStorage.removeItem('inProgressRecipes');
     history.push('/receitas-feitas');
   };
-
-  console.log(arrayForLocalStorage);
 
   return (
     <>
@@ -115,9 +113,13 @@ const ListIngredients = ({ ingredients, recipeForLocalStorage }) => {
   );
 };
 
+ListIngredients.defaultProps = {
+  recipeForLocalStorage: undefined,
+};
+
 ListIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  recipeForLocalStorage: PropTypes.objectOf(PropTypes.object).isRequired,
+  recipeForLocalStorage: PropTypes.objectOf(PropTypes.string),
 };
 
 export default ListIngredients;

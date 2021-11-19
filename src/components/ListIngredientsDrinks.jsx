@@ -11,19 +11,20 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
   const history = useHistory();
   const regex = /\d+/g;
   const [locationID] = pathname.match(regex);
+
   const handleChecked = () => {
     // retorna true or undefined
-    if (localStorage.getItem('cocktails')) {
-      const recipe = localStorage.getItem('cocktails');
-      const recipeJSon = JSON.parse(recipe)[locationID];
-      const recipeChecked = recipeJSon[0];
+    if (localStorage.getItem('inProgressRecipes')) {
+      const recipe = localStorage.getItem('inProgressRecipes');
+      const { cocktails } = JSON.parse(recipe);
+      const [recipeChecked] = cocktails[locationID];
       return recipeChecked;
     }
     return {};
   };
   const [compareChecked, setCompareChecked] = useState(handleChecked());
   const [disabled, setDisabled] = useState(true);
-  const [arrayForLocalStorage, setArrayForLocalStorage] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
     setDisabled(Object.values(compareChecked)
@@ -32,21 +33,22 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
   }, [compareChecked, ingredients.length]);
 
   useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      const done = localStorage.getItem('doneRecipes');
+      setDoneRecipes(JSON.parse(done));
+    }
+  }, []);
+
+  useEffect(() => {
     const setLocalStorage = () => {
       const cocktails = {
         [locationID]: [compareChecked],
       };
-      localStorage.setItem('cocktails', JSON.stringify(cocktails));
+      localStorage.setItem('inProgressRecipes', JSON.stringify({ cocktails }));
     };
 
     setLocalStorage();
   }, [compareChecked, locationID, pathname]);
-
-  console.log(arrayForLocalStorage);
-
-  useEffect(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(arrayForLocalStorage));
-  }, [arrayForLocalStorage]);
 
   const handleCheckboxControl = (index, checked) => {
     setCompareChecked((prevState) => ({
@@ -67,11 +69,11 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
       name: recipeForLocalStorage.strDrink,
       image: recipeForLocalStorage.strDrinkThumb,
       doneDate: setDate(),
-      tags: recipeForLocalStorage.strTags === null
-        ? [] : recipeForLocalStorage.strTags,
+      tags: [recipeForLocalStorage.strTags],
     };
-    setArrayForLocalStorage((prevState) => [...prevState, currentRecipeDrink]);
-
+    localStorage.setItem('doneRecipes',
+      JSON.stringify([...doneRecipes, currentRecipeDrink]));
+    // localStorage.removeItem('inProgressRecipes');
     history.push('/receitas-feitas');
   };
 
@@ -112,9 +114,13 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
   );
 };
 
+ListIngredientsDrink.defaultProps = {
+  recipeForLocalStorage: undefined,
+};
+
 ListIngredientsDrink.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-  recipeForLocalStorage: PropTypes.objectOf(PropTypes.string).isRequired,
+  recipeForLocalStorage: PropTypes.objectOf(PropTypes.string),
 };
 
 export default ListIngredientsDrink;
