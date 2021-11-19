@@ -27,12 +27,12 @@ img {
   max-width: 80vw;
 }
 
-footer {
+/* footer {
   background: rgb(144, 144, 144);
   bottom: 0;
   position: fixed;
   width: 100vw;
-}
+} */
 
 footer > button {
   margin: auto 0;
