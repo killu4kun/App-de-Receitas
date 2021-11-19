@@ -1,7 +1,7 @@
 export function handleToShareBtn(target, Id, type) {
   const initialLink = 'http://localhost:3000/';
   const copyText = `${initialLink}${type}s/${Id}`;
-  navigator.clipboard.writeText(copyText);
+  window.navigator.clipboard.writeText(copyText);
   if (target.parentNode.innerHTML === '<div>Link copiado!</div>') { // rever esta logica
     // empty
   } else {
