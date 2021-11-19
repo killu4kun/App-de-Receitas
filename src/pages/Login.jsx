@@ -56,9 +56,11 @@ function Login() {
               onChange={ ({ target: { value } }) => setEmail(value) }
             />
             { !isEmailValid(userEmail)
-              ? <Form.Text type="invalid">
-                Insira um e-mail válido
-              </Form.Text>
+              ? (
+                <Form.Text type="invalid">
+                  Insira um e-mail válido
+                </Form.Text>
+              )
               : ''}
           </Form.Group>
           <Form.Group className="mb-3" controlId="password">
@@ -71,13 +73,16 @@ function Login() {
               onChange={ ({ target: { value } }) => setPassword(value) }
             />
             { !validate
-              ? <Form.Text type="invalid">
-                Insira uma senha com o mínimo de 6 caracteres
-              </Form.Text>
-              : (<Form.Text className="text-success">
-                Senha válida
-              </Form.Text>
-              ) }
+              ? (
+                <Form.Text type="invalid">
+                  Insira uma senha com o mínimo de 6 caracteres
+                </Form.Text>
+              )
+              : (
+                <Form.Text className="text-success">
+                  Senha válida
+                </Form.Text>
+              )}
           </Form.Group>
           <section className="d-grid gap-2">
             <Button
