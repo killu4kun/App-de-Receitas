@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Context from '../context/RecipeContext';
-import Footer from '../components/Footer';
 import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
 
 function FavoriteRecipes() {
@@ -44,7 +43,6 @@ function FavoriteRecipes() {
           Drinks
         </button>
         <FavoriteRecipeCard />
-        <Footer />
       </div>
     </div>
   );
