@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useLocation } from 'react-router';
-import RecipeContext from '../context/RecipeContext';
 import { handleFavoritedBtn,
   favoritedItem, handleToShareBtn } from '../services/utilityFunctions';
 import ShareIcon from '../images/shareIcon.svg';
@@ -12,8 +11,7 @@ import ListIngredientsDrink from '../components/ListIngredientsDrinks';
 const totalIngredients = 16;
 const BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
-function FoodInProgress() {
-  const { recipeID } = useContext(RecipeContext);
+function DrinkInProgress() {
   const [favorited, setFavorited] = useState(false);
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [heartChange, setHeartChange] = useState('');
@@ -26,6 +24,8 @@ function FoodInProgress() {
     setFavorited(favoritedItem(locationID));
   }, [heartChange, locationID]);
 
+  // ideia de fazer requisição na propria página desenvolvida com ajuda
+  // de Arthur Junior, turma 13-B
   const recipe = useCallback(async () => {
     const response = await fetch(
       `${BASE_URL}${locationID}`,
@@ -86,9 +86,11 @@ function FoodInProgress() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleFavoritedClick(recipeID, locationID,
+            onClick={ () => handleFavoritedClick(currentRecipe, locationID,
               'bebida', setHeartChange) }
-            text="Favoritar comida"
+            text="Favoritar bebida"
+            src={ favorited ? BlackHeart : WhiteHeart }
+            alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
           </button>
@@ -112,4 +114,4 @@ function FoodInProgress() {
   );
 }
 
-export default FoodInProgress;
+export default DrinkInProgress;

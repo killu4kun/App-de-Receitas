@@ -1,8 +1,7 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useLocation } from 'react-router';
 import ListIngredients from '../components/ListIngredients';
-import RecipeContext from '../context/RecipeContext';
 import { handleFavoritedBtn,
   favoritedItem, handleToShareBtn } from '../services/utilityFunctions';
 import ShareIcon from '../images/shareIcon.svg';
@@ -13,7 +12,6 @@ const totalIngredients = 16;
 const BASE_URL = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 
 function FoodInProgress() {
-  const { recipeID } = useContext(RecipeContext);
   const [favorited, setFavorited] = useState(false);
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [heartChange, setHeartChange] = useState('');
@@ -86,9 +84,11 @@ function FoodInProgress() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleFavoritedClick(recipeID, locationID,
+            onClick={ () => handleFavoritedClick(currentRecipe, locationID,
               'comida', setHeartChange) }
             text="Favoritar comida"
+            src={ favorited ? BlackHeart : WhiteHeart }
+            alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
           </button>
