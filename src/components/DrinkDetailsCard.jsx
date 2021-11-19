@@ -46,10 +46,6 @@ function DrinkDetailsCard() {
     fetchRecommendations();
   }, []);
 
-  function handleClick(recipe, Id, type, func) {
-    handleFavoritedBtn(recipe, Id, type, func);
-  }
-
   function handleStartRecipe() {
     const ingredients = allIngredientsMeasures.map(({ ingredient }) => ingredient);
     const cocktails = {
@@ -86,7 +82,7 @@ function DrinkDetailsCard() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleClick(recipeID, ID, 'bebida', setHeartChange) }
+            onClick={ () => handleFavoritedBtn(recipeID, ID, 'bebida', setHeartChange) }
             text="Favoritar bebida"
             src={ favorited ? BlackHeart : WhiteHeart }
             alt="favoritar"
