@@ -10,24 +10,29 @@
 //     doneDate: quando-a-receita-foi-concluida,
 //     tags: array-de-tags-da-receita-ou-array-vazio
 // }]
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../context/RecipeContext';
 import ShareIcon from '../images/shareIcon.svg';
 import { handleToShareBtn } from '../services/utilityFunctions';
 
 function DoneRecipeCards() {
-  const doneRecipesLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+  const [doneRecipesLocalStorage, setDoneRecipesLocalStorage] = useState([]);
+
+  useEffect(() => {
+    const receveLocalStorage = localStorage.getItem('doneRecipes');
+    const done = JSON.parse(receveLocalStorage);
+    setDoneRecipesLocalStorage(done);
+  }, []);
   const { doneRecipesFilter } = useContext(Context); // doneRecipesFilter é o esatdo para armazenar os tipos de filtro
   // o estado de doneRecipesFilter vai ser definido no clique da página de receitas prontas (/pages/DoneRecipes)
   // com o clique o estado e definido para ser utilizado na funçao de filtro
   // Redirecione para a tela de detalhes da receita caso seja clicado na foto ou no nome da receita
 
   // comida e drink vao no singular devido ao formato de construção do local storage
-
   return (
     <div>
-      { doneRecipesLocalStorage.filter((recipe) => ( // filtro do que esta armazenado no localstorage
+      {doneRecipesLocalStorage.filter((recipe) => ( // filtro do que esta armazenado no localstorage
         recipe.type !== doneRecipesFilter)) // se o tipo do filtro for igual o tipo da receita, filtra/ o filtro começa como all (valor '') setado
         // no estado inicial
         .map((recipe, index) => ( // por ser singular lancei o "s" depois do tipo

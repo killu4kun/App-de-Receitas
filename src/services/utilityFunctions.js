@@ -58,6 +58,17 @@ export function handleKeyInLocalStorage(key, id) {
   return textButton;
 }
 
+export const setDate = () => {
+  // implementação da data obtida através de código visto em:
+  // https://www.horadecodar.com.br/2021/04/03/como-pegar-a-data-atual-com-javascript/
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const presentDate = `${day}/${month}/${year}`;
+  return presentDate;
+};
+
 // The some() method tests whether at least one element in the array passes the test implemented by the provided function
 
 // a chave favoriteRecipes deve conter a seguinte estrutura:

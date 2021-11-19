@@ -2,6 +2,11 @@
 // pegar os dados e renderizar atraves da conexão de components e o estado global
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Card,
+  Carousel,
+  Button,
+  ListGroup,
+  Spinner } from 'react-bootstrap';
 import {
   favoritedItem,
   handleToShareBtn,
@@ -57,10 +62,6 @@ function FoodDetailCard() {
     fetchRecommendations();
   }, []); // para comidas se recomenda drinks
 
-  function handleClick(recipe, Id, type, func) {
-    handleFavoritedBtn(recipe, Id, type, func);
-  }
-
   function handleStartRecipe() {
     const ingredients = allIngredientsMeasures.map(({ ingredient }) => ingredient);
     const meals = {
@@ -75,49 +76,55 @@ function FoodDetailCard() {
   }
 
   return (
-    <div>
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ recipeID.strMealThumb }
-          alt={ recipeID.strMeal }
-        />
-      </div>
-      <div>
+    <Card className="container-fluid">
+      <img
+        className="img-fluid"
+        data-testid="recipe-photo"
+        src={ recipeID.strMealThumb }
+        alt={ recipeID.strMeal }
+      />
+      <section className="d-block pt-3 justify-content-center">
+        <h6 className="align-center">Hoje vamos preparar: </h6>
         <h2 data-testid="recipe-title">{ recipeID.strMeal }</h2>
-        <div>
-          <button
+        <h6 className="" data-testid="recipe-category">
+          <small className="text-muted">Categoria:</small>
+          {' '}
+          { recipeID.strCategory }
+        </h6>
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="light"
             type="button"
             data-testid="share-btn"
             onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="light"
+            style={ { cursor: 'pointer' } }
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => handleClick(recipeID, ID, 'comida', setHeartChange) }
+            onClick={ () => handleFavoritedBtn(recipeID, ID, 'comida', setHeartChange) }
             text="Favoritar comida"
             src={ favorited ? BlackHeart : WhiteHeart }
             alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
-          </button>
+          </Button>
         </div>
-        <h5 data-testid="recipe-category">{ recipeID.strCategory }</h5>
-        <div />
-        <div>
+        <section>
           {allIngredientsMeasures.length >= 1 ? (
             allIngredientsMeasures.map((ingredient, index) => (
-              <div key={ index }>
-                <p data-testid={ `${index}-ingredient-name-and-measure` }>
+              <ListGroup variant="flush" key={ index }>
+                <ListGroup.Item data-testid={ `${index}-ingredient-name-and-measure` }>
                   { `${ingredient.ingredient} - ${ingredient.measure}` }
-                </p>
-              </div>
+                </ListGroup.Item>
+              </ListGroup>
             ))
-          ) : <p>Loading...</p>}
-        </div>
+          ) : <Spinner animation="grow" variant="warning">Loading...</Spinner>}
+        </section>
         <div>
           <p data-testid="instructions">
             {recipeID.strInstructions}
@@ -127,40 +134,46 @@ function FoodDetailCard() {
           <p data-testid="video">video</p>
         </div>
         <div>
-          <h1 data-testid="0-recomendation-title">Recomendadas</h1>
-          {recommendations.length > 1 ? (
-            recommendations.map((recommended, index) => (
-              index < SIX ? (
-                <div data-testid={ `${index}-recomendation-card` } key={ index }>
-                  <div>
+          <h2 data-testid="0-recomendation-title">Recomendadas</h2>
+          <Carousel
+            fade
+            className="d-block w-100"
+          >
+            {recommendations.length > 1 ? (
+              recommendations.map((recommended, index) => (
+                index < SIX ? (
+                  <Carousel.Item
+                    data-testid={ `${index}-recomendation-card` }
+                    key={ index }
+                  >
                     <img
+                      className="d-block w-100"
                       src={ recommended.strDrinkThumb }
                       alt={ recommended.strDrink }
                     />
-                  </div>
-                  <div>
-                    <p>{ recommended.strCategory }</p>
-                    <p data-testid={ `${index}-recomendation-title` }>
-                      { recommended.strDrink }
-                    </p>
-                  </div>
-                </div>
-              ) : null
-            ))
-          ) : <p>Loading...</p>}
+                    <Carousel.Caption>
+                      <h3>{ recommended.strCategory }</h3>
+                      <p data-testid={ `${index}-recomendation-title` }>
+                        { recommended.strDrink }
+                      </p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ) : null
+              ))
+            ) : <Spinner animation="grow" variant="warning">Loading...</Spinner>}
+          </Carousel>
         </div>
-        <div>
-          <button
+        <section>
+          <Button
             type="button"
-            className="btn-start-recipe"
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >
             Iniciar Receita
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </section>
+      </section>
+    </Card>
   );
 }
 
