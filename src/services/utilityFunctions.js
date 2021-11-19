@@ -51,12 +51,11 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
   }
 }
 
-export function handleKeyInLocalStorage(key, id) {
-  const textButton = Object.keys(key).length === 0
-            && !Object.keys(key).contains(id)
-    ? 'Iniciar Receita' : 'Continuar Receita';
-  return textButton;
-}
+// export function handleKeyInLocalStorage(key, id) {
+//   const textButton = Object.keys(key).some((item) => item.id === id)
+//     ? 'Continuar Receita' : 'Iniciar Receita';
+//   return textButton;
+// }
 
 export const setDate = () => {
   // implementação da data obtida através de código visto em:
