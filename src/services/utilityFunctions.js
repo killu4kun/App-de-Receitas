@@ -1,7 +1,7 @@
 export function handleToShareBtn(target, Id, type) {
   const initialLink = 'http://localhost:3000/';
   const copyText = `${initialLink}${type}s/${Id}`;
-  navigator.clipboard.writeText(copyText);
+  window.navigator.clipboard.writeText(copyText);
   if (target.parentNode.innerHTML === '<div>Link copiado!</div>') { // rever esta logica
     // empty
   } else {
@@ -51,12 +51,11 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
   }
 }
 
-export function handleKeyInLocalStorage(key, id) {
-  const textButton = Object.keys(key).length === 0
-            && !Object.keys(key).contains(id)
-    ? 'Iniciar Receita' : 'Continuar Receita';
-  return textButton;
-}
+// export function handleKeyInLocalStorage(key, id) {
+//   const textButton = Object.keys(key).some((item) => item.id === id)
+//     ? 'Continuar Receita' : 'Iniciar Receita';
+//   return textButton;
+// }
 
 export const setDate = () => {
   // implementação da data obtida através de código visto em:

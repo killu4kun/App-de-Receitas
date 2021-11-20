@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+// import { isArray } from 'lodash-es';
 import {
   favoritedItem,
   handleToShareBtn,
@@ -9,33 +10,55 @@ import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg';
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 
+const totalIngredients = 16;
+function getIngredientsAndMeasures(compare, callback) {
+  const ingredientsAndMeasures = [];
+  for (let index = 1; index < totalIngredients; index += 1) {
+    const ingredient = compare[`strIngredient${index}`];
+    const measure = compare[`strMeasure${index}`];
+    if (ingredient) {
+      ingredientsAndMeasures.push({ ingredient, measure });
+    }
+  }
+  callback(ingredientsAndMeasures);
+}
+
 function DrinkDetailsCard() {
   const { recipeID, ID } = useContext(RecipeContext);
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [favorited, setFavorited] = useState(false);
   const [heartChange, setHeartChange] = useState('');
-  const totalIngredients = 16;
   const SIX = 6; // limite de recomendaçoes
   const history = useHistory();
+  const [text, setText] = useState('Iniciar Receita');
+
+  useEffect(() => {
+    function setStartOrContinue() {
+      const inProgress = localStorage.getItem('inProgressRecipes') !== null
+      && localStorage.getItem('inProgress')
+      !== undefined ? localStorage.getItem('inProgressRecipes') : '';
+      const seven = 21;
+      const fifteen = 15;
+      // const regex = /\b\d{5-6}\b/g;
+      // const json = inProgress.match(regex);
+
+      const json = inProgress.slice(fifteen, seven);
+      console.log(json);
+      if (json === ID) {
+        setText('Continuar Receita');
+        console.log(json);
+      }
+    }
+    setStartOrContinue();
+  }, [ID]);
 
   useEffect(() => {
     setFavorited(favoritedItem(ID));
   }, [heartChange]);
 
   useEffect(() => {
-    function getIngredientsAndMeasures() {
-      const ingredientsAndMeasures = [];
-      for (let index = 1; index < totalIngredients; index += 1) {
-        const ingredient = recipeID[`strIngredient${index}`];
-        const measure = recipeID[`strMeasure${index}`];
-        if (ingredient) {
-          ingredientsAndMeasures.push({ ingredient, measure });
-        }
-      }
-      setAllIngredientsMeasures(ingredientsAndMeasures);
-    }
-    getIngredientsAndMeasures();
+    getIngredientsAndMeasures(recipeID, setAllIngredientsMeasures);
   }, []);
 
   useState(() => {
@@ -51,11 +74,11 @@ function DrinkDetailsCard() {
     const cocktails = {
       [ID]: ingredients,
     };
-    const recipePhoto = {
-      recipeID,
-    };
+    // const recipePhoto = {
+    //   recipeID,
+    // };
     localStorage.setItem('inProgress', JSON.stringify(cocktails));
-    localStorage.setItem('recipeID', JSON.stringify(recipePhoto));
+    // localStorage.setItem('recipeID', JSON.stringify(recipePhoto));
     history.push(`/bebidas/${ID}/in-progress`);
   }
 
@@ -141,7 +164,7 @@ function DrinkDetailsCard() {
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >
-            Iniciar Receita
+            { text }
           </button>
         </div>
       </div>

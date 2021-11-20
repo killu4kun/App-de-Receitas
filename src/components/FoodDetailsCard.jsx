@@ -17,6 +17,19 @@ import ShareIcon from '../images/shareIcon.svg';
 import BlackHeart from '../images/blackHeartIcon.svg'; // incones para modificar botão de favoritos
 import WhiteHeart from '../images/whiteHeartIcon.svg';
 
+const totalIngredients = 16;
+function getIngredientsAndMeasures(compare, callback) {
+  const ingredientsAndMeasures = [];
+  for (let index = 1; index < totalIngredients; index += 1) {
+    const ingredient = compare[`strIngredient${index}`];
+    const measure = compare[`strMeasure${index}`];
+    if (ingredient) {
+      ingredientsAndMeasures.push({ ingredient, measure });
+    }
+  }
+  callback(ingredientsAndMeasures);
+}
+
 function FoodDetailCard() {
   const { recipeID, ID } = useContext(RecipeContext); // retorno da API armazenado
   const [allIngredientsMeasures, setAllIngredientsMeasures] = useState([]);
@@ -24,7 +37,7 @@ function FoodDetailCard() {
   const [favorited, setFavorited] = useState(false);
   const [heartChange, setHeartChange] = useState(''); // change heart logo (favorites)
   // const [mealsOfLocalStorage, setMealsOfLocalStorage] = useState({});
-  const totalIngredients = 16;
+  const [text, setText] = useState('Iniciar Receita');
   const SIX = 6; // restrição do numero de recomendaçoes
   const history = useHistory();
 
@@ -40,18 +53,24 @@ function FoodDetailCard() {
   // }, []);
 
   useEffect(() => {
-    function getIngredientsAndMeasures() {
-      const ingredientsAndMeasures = [];
-      for (let index = 1; index < totalIngredients; index += 1) {
-        const ingredient = recipeID[`strIngredient${index}`]; // pega os resultados da api. resultados da api amarzenados em recipeId
-        const measure = recipeID[`strMeasure${index}`]; // recebe a api com o id da seleção e passa estado global que retorna aqui
-        if (ingredient) {
-          ingredientsAndMeasures.push({ ingredient, measure });
-        }
+    function setStartOrContinue() {
+      const inProgress = localStorage.getItem('inProgressRecipes') !== null
+       && localStorage.getItem('inProgress')
+      !== undefined ? localStorage.getItem('inProgressRecipes') : '';
+      const sixteen = 16;
+      const eleven = 11;
+      const json = inProgress.slice(eleven, sixteen);
+      console.log(json);
+      if (json === ID) {
+        setText('Continuar Receita');
+        console.log(json);
       }
-      setAllIngredientsMeasures(ingredientsAndMeasures); // retorna os ingredientes e quantidades com base no id da receita selecionada
     }
-    getIngredientsAndMeasures();
+    setStartOrContinue();
+  }, [ID]);
+
+  useEffect(() => {
+    getIngredientsAndMeasures(recipeID, setAllIngredientsMeasures);
   }, []);
 
   useState(() => {
@@ -169,7 +188,7 @@ function FoodDetailCard() {
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >
-            Iniciar Receita
+            { text }
           </Button>
         </section>
       </section>
