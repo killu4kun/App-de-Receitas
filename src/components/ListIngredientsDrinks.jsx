@@ -58,6 +58,7 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
   };
 
   const handleRedirect = () => {
+    localStorage.removeItem('inProgressRecipes');
     const currentRecipeDrink = {
       id: recipeForLocalStorage.idDrink,
       type: pathname.slice(1, SLICE_ROUTE),
@@ -73,7 +74,6 @@ const ListIngredientsDrink = ({ ingredients, recipeForLocalStorage }) => {
     };
     localStorage.setItem('doneRecipes',
       JSON.stringify([...doneRecipes, currentRecipeDrink]));
-    // localStorage.removeItem('inProgressRecipes');
     history.push('/receitas-feitas');
   };
 
