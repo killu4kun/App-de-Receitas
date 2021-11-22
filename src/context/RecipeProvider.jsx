@@ -117,7 +117,6 @@ function RecipeProvider({ children }) {
   };
 
   const handleCategorySelected = async (location, categoria) => {
-    console.log(('categoria'), categoria);
     if (categoria === clickedCategory) {
       setFilteredCategory([]);
       setClicked('');
@@ -131,8 +130,6 @@ function RecipeProvider({ children }) {
       );
     }
     setSearchIngredients([]);
-    console.log(('setclicked'), clickedCategory);
-    console.log(('category selected'), categoria);
   };
 
   const handleAllCategory = () => {

@@ -11,7 +11,7 @@ function EveryDrinkCard() {
     return global
       .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
-  const everyRecipeSearched = Object.values(searchIngredients).slice(0, maxResults);
+  const everyRecipeSearched = (searchIngredients).slice(0, maxResults);
   const everyRecipeByCategory = filteredCategory === null || filteredCategory.length === 0
     ? [] : (filteredCategory).slice(0, maxResults);
   const everyRecipe = Object.values(drinks).slice(0, maxResults);
