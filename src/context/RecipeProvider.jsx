@@ -9,14 +9,18 @@ import {
   getAllIngredientsDrinks,
   getRecipeByIngredient,
   getRecipeByName,
+  getRecipeByCategory,
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
 // const MAX_SEARCH_INGREDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
+  const [clickedCategory, setClicked] = useState('');
   const [mealsRecipes, setMealsRecipes] = useState({});
+  const [filteredCategory, setFilteredCategory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
   const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
@@ -55,13 +59,19 @@ function RecipeProvider({ children }) {
   // das receitas prontas/ estado incial filter all
 
   const retrieveFoods = async () => {
+    // console.log(("true"),setLoadingCategories);
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
+    // console.log(("false"),setLoadingCategories);
   };
 
   const retrieveDrinks = async () => {
     setDrinksCategories(await getAllCategoriesDrinks());
     setDrinksIngredients(await getAllIngredientsDrinks());
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
   };
 
   const retrieveSearchedRecipeByIngredient = async () => {
@@ -72,7 +82,6 @@ function RecipeProvider({ children }) {
       ),
     );
   };
-
   const retrieveSearchedRecipeByName = async () => {
     setSearchIngredients(
       await getRecipeByName(
@@ -109,6 +118,28 @@ function RecipeProvider({ children }) {
     console.log('radio change', value);
   };
 
+  const handleCategorySelected = async (location, categoria) => {
+    if (categoria === clickedCategory) {
+      setFilteredCategory([]);
+      setClicked('');
+    } else {
+      setClicked(categoria);
+      setFilteredCategory(
+        await getRecipeByCategory(
+          location,
+          categoria,
+        ),
+      );
+    }
+    setSearchIngredients([]);
+  };
+
+  const handleAllCategory = () => {
+    setFilteredCategory([]);
+    setSearchIngredients([]);
+  };
+
+  console.log(('Filtered Category'), filteredCategory);
   const handleClick = () => {
     switch (radioSelected) {
     case 'ingredient':
@@ -124,6 +155,7 @@ function RecipeProvider({ children }) {
       return 0;
     }
     setShowSearchInput(false);
+    setFilteredCategory([]);
   };
 
   // didMount da massa
@@ -141,8 +173,10 @@ function RecipeProvider({ children }) {
     }
     fetchData();
   }, []);
-
+  console.log(('filteredCategory2'), filteredCategory);
   const contextValue = {
+    filteredCategory,
+    loadingCategories,
     foodsCategories,
     foodsIngredients,
     drinksCategories,
@@ -157,17 +191,19 @@ function RecipeProvider({ children }) {
     recipeID,
     recipesDb,
     ID,
-    setDoneRecipesFilter,
+    handleCategorySelected,
+    handleClick,
+    handleInputChange,
+    handleRadioChange,
     setLocationName,
+    handleSearchButtonClick,
+    setDoneRecipesFilter,
     setRecipeInProgress,
     setLoading,
     setRecipeID,
     setID,
+    handleAllCategory,
     setRecipesDb,
-    handleClick,
-    handleInputChange,
-    handleRadioChange,
-    handleSearchButtonClick,
   };
   // console.log(('mealRecipes :'), mealsRecipes);
   console.log(('searchIngredients :'), searchIngredients);

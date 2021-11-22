@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import EachCard from './EachCard';
 
-function EveryDrinkCard() {
-  const { drinksRecipes: { drinks }, searchIngredients,
+function EveryMealCard() {
+  const { mealsRecipes: { meals }, searchIngredients,
     filteredCategory } = useContext(RecipeContext);
+
   const maxResults = 12;
   if (searchIngredients === null || searchIngredients === undefined) {
     return global
       .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
+  const everyRecipe = Object.values(meals).slice(0, maxResults);
   const everyRecipeSearched = (searchIngredients).slice(0, maxResults);
   const everyRecipeByCategory = filteredCategory === null || filteredCategory.length === 0
     ? [] : (filteredCategory).slice(0, maxResults);
-  const everyRecipe = Object.values(drinks).slice(0, maxResults);
-  console.log(('abc'), everyRecipe);
+  console.log(('filteredCategory'), filteredCategory);
+  console.log(('meals'), meals);
+  console.log(('searched'), everyRecipeSearched);
   const mapingCards = (param) => (
     param.map((recipe, index) => (
       <div
@@ -23,12 +26,12 @@ function EveryDrinkCard() {
         data-testid={ `${index}-recipe-card` }
         key={ index }
       >
-        <Link to={ `/bebidas/${recipe.idDrink}` } key={ index }>
+        <Link to={ `/comidas/${recipe.idMeal}` } key={ index }>
           <EachCard
             className="each-card"
-            imgsrc={ recipe.strDrinkThumb }
+            imgsrc={ recipe.strMealThumb }
             index={ index }
-            cardName={ recipe.strDrink }
+            cardName={ recipe.strMeal }
             data-testid={ `${index}-recipe-card` }
           />
         </Link>
@@ -63,4 +66,4 @@ function EveryDrinkCard() {
   );
 }
 
-export default EveryDrinkCard;
+export default EveryMealCard;
