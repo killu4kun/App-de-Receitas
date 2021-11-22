@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RecipeContext from '../context/RecipeContext';
-import DrinkDetailCard from '../components/DrinkDetailsCard';
+import DrinkDetailsCard from '../components/DrinkDetailsCard';
 
 function DrinkDetails(props) {
   const {
@@ -31,7 +31,7 @@ function DrinkDetails(props) {
 
   return (
     <div>
-      {recipeID !== '' ? <DrinkDetailCard /> : <p>Loading...</p> }
+      {recipeID !== '' ? <DrinkDetailsCard /> : <p>Loading...</p> }
     </div>
   );
 }

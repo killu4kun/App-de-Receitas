@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import EachCard from './EachCard';
@@ -8,9 +8,9 @@ function EveryMealCard() {
     filteredCategory } = useContext(RecipeContext);
 
   const maxResults = 12;
-  if (!meals && searchIngredients.length < 1) {
-    global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    return <p>Nenhum resultado encontrado</p>;
+  if (searchIngredients === null || searchIngredients === undefined) {
+    return global
+      .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
   const everyRecipe = Object.values(meals).slice(0, maxResults);
   const everyRecipeSearched = (searchIngredients).slice(0, maxResults);
@@ -64,7 +64,6 @@ function EveryMealCard() {
       { mapingCards(everyRecipe) }
     </div>
   );
-
 }
 
 export default EveryMealCard;

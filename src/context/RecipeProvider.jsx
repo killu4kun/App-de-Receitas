@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import RecipeContext from './RecipeContext';
 import {
   getAllCategoriesMeal,
@@ -8,10 +9,14 @@ import {
   getAllIngredientsDrinks,
   getRecipeByIngredient,
   getRecipeByName,
+  getRecipeByCategory,
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
+// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+
 function RecipeProvider({ children }) {
+  const [clickedCategory, setClicked] = useState('');
   const [mealsRecipes, setMealsRecipes] = useState({});
   const [filteredCategory, setFilteredCategory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +31,26 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const [recipeInProgress, setRecipeInProgress] = useState([]);
+  const history = useHistory();
+  useEffect(() => {
+    if (searchIngredients === null || searchIngredients === undefined) {
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+    if (searchIngredients.length === 1) {
+      if (locationName === 'comidas') {
+        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+      } else if (locationName === 'bebidas') {
+        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+      }
+    }
+    // else if (searchIngredients.length > 1) {
+    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+    // }
+  }, [locationName, searchIngredients, history]);
+  const [recipesDb, setRecipesDb] = useState([]);
+  // const [urlFoods,setUrlFoods] = useState([]);
 
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
@@ -35,14 +60,16 @@ function RecipeProvider({ children }) {
     // console.log(("true"),setLoadingCategories);
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
-    if (drinksCategories.length > 0 && foodsCategories.length > 0) { setLoadingCategories(false); }
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
     // console.log(("false"),setLoadingCategories);
   };
 
   const retrieveDrinks = async () => {
     setDrinksCategories(await getAllCategoriesDrinks());
     setDrinksIngredients(await getAllIngredientsDrinks());
-    if (drinksCategories.length > 0 && foodsCategories.length > 0) { setLoadingCategories(false); }
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
   };
 
   const retrieveSearchedRecipeByIngredient = async () => {
@@ -67,7 +94,7 @@ function RecipeProvider({ children }) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       setSearchIngredients(
-        await getRecipeByName(
+        await getRecipeByFirstLetter(
           locationName,
           ingredientInput,
         ),
@@ -90,14 +117,27 @@ function RecipeProvider({ children }) {
   };
 
   const handleCategorySelected = async (location, categoria) => {
-    setFilteredCategory(
-      await getRecipeByName(
-        location,
-        categoria,
-      ),
-    );
+    console.log(('categoria'), categoria);
+    if (categoria === clickedCategory) {
+      setFilteredCategory([]);
+      setClicked('');
+    } else {
+      setClicked(categoria);
+      setFilteredCategory(
+        await getRecipeByCategory(
+          location,
+          categoria,
+        ),
+      );
+    }
     setSearchIngredients([]);
-    // console.log(('category selected'), clickedCategory)
+    console.log(('setclicked'), clickedCategory);
+    console.log(('category selected'), categoria);
+  };
+
+  const handleAllCategory = () => {
+    setFilteredCategory([]);
+    setSearchIngredients([]);
   };
 
   console.log(('Filtered Category'), filteredCategory);
@@ -146,20 +186,24 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    recipeInProgress,
+    loading,
+    recipeID,
+    recipesDb,
+    ID,
     handleCategorySelected,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
-    loading,
+    setRecipeInProgress,
     setLoading,
     setRecipeID,
     setID,
-    recipeID,
-    ID,
+    handleAllCategory,
+    setRecipesDb,
   };
-
   console.log(('mealRecipes :'), mealsRecipes);
   console.log(('searchIngredients :'), searchIngredients);
   console.log(loading);

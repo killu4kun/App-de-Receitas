@@ -4,17 +4,20 @@ import RecipeContext from '../context/RecipeContext';
 import EachCard from './EachCard';
 
 function EveryDrinkCard() {
-  const { drinksRecipes: { drinks }, searchIngredients } = useContext(RecipeContext);
-
+  const { drinksRecipes: { drinks }, searchIngredients,
+    filteredCategory } = useContext(RecipeContext);
   const maxResults = 12;
-  if (!drinks) {
-    global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    return <p>Nenhum resultado encontrado</p>;
+  if (searchIngredients === null || searchIngredients === undefined) {
+    return global
+      .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
   const everyRecipeSearched = Object.values(searchIngredients).slice(0, maxResults);
+  const everyRecipeByCategory = filteredCategory === null || filteredCategory.length === 0
+    ? [] : (filteredCategory).slice(0, maxResults);
   const everyRecipe = Object.values(drinks).slice(0, maxResults);
-  const everyCard = everyRecipe
-    .map((recipe, index) => (
+  console.log(('abc'), everyRecipe);
+  const mapingCards = (param) => (
+    param.map((recipe, index) => (
       <div
         className="every-card"
         data-testid={ `${index}-recipe-card` }
@@ -29,44 +32,35 @@ function EveryDrinkCard() {
             data-testid={ `${index}-recipe-card` }
           />
         </Link>
-      </div>));
+      </div>))
+  );
 
-  const everyCardSearched = everyRecipeSearched
-    .map((recipes, index) => (
-      <div
-        className="every-card"
-        data-testid={ `${index}-recipe-card` }
-        key={ index }
-      >
-        <Link to={ `/bebidas/${recipes.idDrink}` } key={ index }>
-          <EachCard
-            className="each-card"
-            imgsrc={ recipes.strDrinkThumb }
-            index={ index }
-            cardName={ recipes.strDrink }
-            data-testid={ `${index}-recipe-card` }
-          />
-        </Link>
-      </div>));
-  if (everyCardSearched.length === 0) {
+  if (everyRecipeSearched.length > 0) {
     return (
       <div
         className="div-cards"
       >
-        { everyCard }
+        { mapingCards(everyRecipeSearched) }
       </div>
     );
   }
 
-  if (everyCardSearched.length > 0) {
+  if (everyRecipeByCategory.length > 0) {
     return (
       <div
         className="div-cards"
       >
-        { everyCardSearched }
+        { mapingCards(everyRecipeByCategory) }
       </div>
     );
   }
+  return (
+    <div
+      className="div-cards"
+    >
+      { mapingCards(everyRecipe) }
+    </div>
+  );
 }
 
 export default EveryDrinkCard;

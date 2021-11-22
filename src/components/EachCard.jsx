@@ -8,9 +8,9 @@ function EachCard({ imgsrc, cardName, index, onclick }) {
         className="foodImage"
         src={ imgsrc }
         alt="Recipe thumbnail"
-        data-testid={ index+"-card-img" }
+        data-testid={ `${index}-card-img` }
       />
-      <p data-testid={ index+"-card-name" }>
+      <p data-testid={ `${index}-card-name` }>
         { cardName }
       </p>
     </button>
@@ -21,7 +21,11 @@ EachCard.propTypes = {
   imgsrc: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  onclick: PropTypes.func.isRequired,
+  onclick: PropTypes.func,
+};
+
+EachCard.defaultProps = {
+  onclick: () => {},
 };
 
 export default EachCard;

@@ -1,11 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import PropTypes from 'prop-types';
 import RecipeContext from '../context/RecipeContext';
 
 function CategoriesButtons({ title }) {
   const { pathname } = useLocation();
   const locationRoute = pathname.slice(1);
-  const { setLocationName, drinksCategories, foodsCategories, handleCategorySelected } = useContext(RecipeContext);
+  const { setLocationName, drinksCategories,
+    foodsCategories, handleCategorySelected,
+    handleAllCategory } = useContext(RecipeContext);
   const maxResults = 5;
   useEffect(() => {
     setLocationName(locationRoute);
@@ -31,16 +34,27 @@ function CategoriesButtons({ title }) {
         >
           { category.strCategory }
         </button>
-
       </div>));
 
   return (
     <div
       className="div-cards"
     >
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        name="All"
+        onClick={ () => handleAllCategory() }
+      >
+        All
+      </button>
       { everyButtonCategory }
     </div>
   );
 }
+
+CategoriesButtons.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default CategoriesButtons;
