@@ -13,7 +13,7 @@ import {
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
-// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+// const MAX_SEARCH_INGREDIENTS_LENGTH = 12;
 
 function RecipeProvider({ children }) {
   const [clickedCategory, setClicked] = useState('');
@@ -50,11 +50,13 @@ function RecipeProvider({ children }) {
     // }
   }, [locationName, searchIngredients, history]);
   const [recipesDb, setRecipesDb] = useState([]);
-  // const [urlFoods,setUrlFoods] = useState([]);
 
+  // const [urlFoods,setUrlFoods] = useState([]);
   const [recipeID, setRecipeID] = useState('');
   const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
   // buscada no retorno da API na pagina de detalhes
+  const [doneRecipesFilter, setDoneRecipesFilter] = useState(''); // função e estado para armazenar o tipo do filtro
+  // das receitas prontas/ estado incial filter all
 
   const retrieveFoods = async () => {
     // console.log(("true"),setLoadingCategories);
@@ -183,6 +185,7 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    doneRecipesFilter,
     recipeInProgress,
     loading,
     recipeID,
@@ -194,6 +197,7 @@ function RecipeProvider({ children }) {
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
+    setDoneRecipesFilter,
     setRecipeInProgress,
     setLoading,
     setRecipeID,
@@ -201,9 +205,9 @@ function RecipeProvider({ children }) {
     handleAllCategory,
     setRecipesDb,
   };
-  console.log(('mealRecipes :'), mealsRecipes);
+  // console.log(('mealRecipes :'), mealsRecipes);
   console.log(('searchIngredients :'), searchIngredients);
-  console.log(loading);
+  // console.log(loading);
 
   return (
     <RecipeContext.Provider value={ contextValue }>

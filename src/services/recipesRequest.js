@@ -121,6 +121,15 @@ export const getRecipeByFirstLetter = async (type, ingredientName) => {
   }
 };
 
+export async function fetchApi(url, food) {
+  const response = await fetch(url);
+  const resolve = await response.json();
+  if (food) {
+    return resolve.meals;
+  }
+  return resolve.drinks;
+}
+
 // bebida
 
 // Na tela de bebidas, se o radio selecionado for Ingrediente, a busca na API é feita corretamente pelo ingrediente. O endpoint utilizado deve ser https://www.thecocktaildb.com/api/json/v1/1/filter.php?i={ingrediente};

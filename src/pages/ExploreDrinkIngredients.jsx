@@ -26,7 +26,7 @@ function ExploreDrinkIngredients() {
   }
   return (
     <div>
-      <Header title="Explorar ingredientes" showSearch={ false } />
+      <Header title="Explorar Ingredientes" showSearch={ false } />
       <div className="card-container">
         {
           ingredients.map((drink, index) => (

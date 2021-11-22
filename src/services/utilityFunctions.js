@@ -1,7 +1,7 @@
 export function handleToShareBtn(target, Id, type) {
   const initialLink = 'http://localhost:3000/';
-  const copyText = `${initialLink}${type}/${Id}`;
-  navigator.clipboard.writeText(copyText);
+  const copyText = `${initialLink}${type}s/${Id}`;
+  window.navigator.clipboard.writeText(copyText);
   if (target.parentNode.innerHTML === '<div>Link copiado!</div>') { // rever esta logica
     // empty
   } else {
@@ -51,12 +51,22 @@ export function handleFavoritedBtn(recipeID, Id, type, func) {
   }
 }
 
-export function handleKeyInLocalStorage(key, id) {
-  const textButton = Object.keys(key).length === 0
-            && !Object.keys(key).contains(id)
-    ? 'Iniciar Receita' : 'Continuar Receita';
-  return textButton;
-}
+// export function handleKeyInLocalStorage(key, id) {
+//   const textButton = Object.keys(key).some((item) => item.id === id)
+//     ? 'Continuar Receita' : 'Iniciar Receita';
+//   return textButton;
+// }
+
+export const setDate = () => {
+  // implementação da data obtida através de código visto em:
+  // https://www.horadecodar.com.br/2021/04/03/como-pegar-a-data-atual-com-javascript/
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const presentDate = `${day}/${month}/${year}`;
+  return presentDate;
+};
 
 // The some() method tests whether at least one element in the array passes the test implemented by the provided function
 

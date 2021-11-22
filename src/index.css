@@ -1,14 +1,11 @@
 @media screen and ( max-width : 360px ) {
   
 }
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
+/* #root {
+  width: 100vw;
+  height: 100vh;
+} */
 
 header {
   align-items: center;
@@ -30,12 +27,12 @@ img {
   max-width: 80vw;
 }
 
-footer {
+/* footer {
   background: rgb(144, 144, 144);
   bottom: 0;
   position: fixed;
   width: 100vw;
-}
+} */
 
 footer > button {
   margin: auto 0;

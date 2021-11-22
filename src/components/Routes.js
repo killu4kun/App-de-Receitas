@@ -12,10 +12,10 @@ import ExploreFood from '../pages/ExploreFood';
 import ExploreFoodIngredients from '../pages/ExploreFoodIngredients';
 import ExploreDrinkIngredients from '../pages/ExploreDrinkIngredients';
 import ExploreFoodArea from '../pages/ExploreFoodArea';
-import DoneRecipes from '../pages/DoneRecipes';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 import FoodDetails from '../pages/FoodDetails';
 import DrinkDetails from '../pages/DrinkDetails';
+import DoneRecipes from '../pages/DoneRecipes';
 import NotFound from '../pages/NotFound';
 
 export default function Routes() {
@@ -51,13 +51,11 @@ export default function Routes() {
       />
       <Route exact path="/explorar/comidas/area" component={ ExploreFoodArea } />
       <Route exact path="/perfil" component={ Profile } />
-      <Route exact path="/receitas-feitas" component={ DoneRecipes } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
       <Route path="/comidas/:id" component={ FoodDetails } />
       <Route path="/bebidas/:id" component={ DrinkDetails } />
+      <Route path="/receitas-feitas" component={ DoneRecipes } />
       <Route path="/explorar/bebidas/area" component={ NotFound } />
-
-
     </Switch>
   );
 }
