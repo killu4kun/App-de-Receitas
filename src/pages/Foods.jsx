@@ -3,15 +3,17 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import RecipeContext from '../context/RecipeContext';
-import EveryMealCard from '../components/EveryMealCard';
+import EveryMealCard from '../components/everyMealCard';
+import CategoryButtons from '../components/CategoryButtons';
 
 function Food() {
   const { loading,
-    showSearchBar } = useContext(RecipeContext);
+    showSearchBar, loadingCategories } = useContext(RecipeContext);
   return (
     <div>
       <Header title="Comidas" showSearch />
       { showSearchBar ? <SearchBar /> : null}
+      { loadingCategories ? <CategoryButtons title="Comidas" /> : null}
       <div className="foods-container">
         { loading ? <p>LOADING...</p> : <EveryMealCard /> }
       </div>

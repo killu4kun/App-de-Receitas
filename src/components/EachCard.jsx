@@ -29,15 +29,15 @@ function EachCard({ imgsrc, cardName, index, onclick }) {
   );
 }
 
-EachCard.defaultProps = {
-  onclick: undefined,
-};
-
 EachCard.propTypes = {
   imgsrc: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onclick: PropTypes.func,
+};
+
+EachCard.defaultProps = {
+  onclick: () => {},
 };
 
 export default EachCard;
