@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import RecipeContext from './RecipeContext';
 import {
   getAllCategoriesMeal,
@@ -8,12 +9,18 @@ import {
   getAllIngredientsDrinks,
   getRecipeByIngredient,
   getRecipeByName,
+  getRecipeByCategory,
   getRecipeByFirstLetter,
 } from '../services/recipesRequest';
 
+// const MAX_SEARCH_INGRIDIENTS_LENGTH = 12;
+
 function RecipeProvider({ children }) {
+  const [clickedCategory, setClicked] = useState('');
   const [mealsRecipes, setMealsRecipes] = useState({});
+  const [filteredCategory, setFilteredCategory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
   const [drinksRecipes, setDrinksRecipes] = useState({});
   const [foodsCategories, setFoodsCategory] = useState([]);
   const [foodsIngredients, setFoodsIngredients] = useState([]);
@@ -24,15 +31,45 @@ function RecipeProvider({ children }) {
   const [radioSelected, setRadioSelected] = useState('');
   const [locationName, setLocationName] = useState('');
   const [showSearchBar, setShowSearchInput] = useState(false);
+  const [recipeInProgress, setRecipeInProgress] = useState([]);
+  const history = useHistory();
+  useEffect(() => {
+    if (searchIngredients === null || searchIngredients === undefined) {
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+    if (searchIngredients.length === 1) {
+      if (locationName === 'comidas') {
+        history.push(`${locationName}/${searchIngredients[0].idMeal}`);
+      } else if (locationName === 'bebidas') {
+        history.push(`${locationName}/${searchIngredients[0].idDrink}`);
+      }
+    }
+    // else if (searchIngredients.length > 1) {
+    //   setSearchIngredients(searchIngredients.slice(0, MAX_SEARCH_INGRIDIENTS_LENGTH));
+    // }
+  }, [locationName, searchIngredients, history]);
+  const [recipesDb, setRecipesDb] = useState([]);
+  // const [urlFoods,setUrlFoods] = useState([]);
+
+  const [recipeID, setRecipeID] = useState('');
+  const [ID, setID] = useState(''); // essa função vai ser utilizada para pegar o id da receita
+  // buscada no retorno da API na pagina de detalhes
 
   const retrieveFoods = async () => {
+    // console.log(("true"),setLoadingCategories);
     setFoodsCategory(await getAllCategoriesMeal());
     setFoodsIngredients(await getAllIngredientsMeal());
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
+    // console.log(("false"),setLoadingCategories);
   };
 
   const retrieveDrinks = async () => {
     setDrinksCategories(await getAllCategoriesDrinks());
     setDrinksIngredients(await getAllIngredientsDrinks());
+    if (drinksCategories.length > 0
+      && foodsCategories.length > 0) { setLoadingCategories(false); }
   };
 
   const retrieveSearchedRecipeByIngredient = async () => {
@@ -43,7 +80,6 @@ function RecipeProvider({ children }) {
       ),
     );
   };
-
   const retrieveSearchedRecipeByName = async () => {
     setSearchIngredients(
       await getRecipeByName(
@@ -72,12 +108,36 @@ function RecipeProvider({ children }) {
 
   const handleInputChange = (value) => {
     setIngredientInput(value);
+    console.log(('input change'), value);
   };
 
   const handleRadioChange = (value) => {
     setRadioSelected(value);
+    console.log('radio change', value);
   };
 
+  const handleCategorySelected = async (location, categoria) => {
+    if (categoria === clickedCategory) {
+      setFilteredCategory([]);
+      setClicked('');
+    } else {
+      setClicked(categoria);
+      setFilteredCategory(
+        await getRecipeByCategory(
+          location,
+          categoria,
+        ),
+      );
+    }
+    setSearchIngredients([]);
+  };
+
+  const handleAllCategory = () => {
+    setFilteredCategory([]);
+    setSearchIngredients([]);
+  };
+
+  console.log(('Filtered Category'), filteredCategory);
   const handleClick = () => {
     switch (radioSelected) {
     case 'ingredient':
@@ -93,6 +153,7 @@ function RecipeProvider({ children }) {
       return 0;
     }
     setShowSearchInput(false);
+    setFilteredCategory([]);
   };
 
   // didMount da massa
@@ -110,8 +171,10 @@ function RecipeProvider({ children }) {
     }
     fetchData();
   }, []);
-
+  console.log(('filteredCategory2'), filteredCategory);
   const contextValue = {
+    filteredCategory,
+    loadingCategories,
     foodsCategories,
     foodsIngredients,
     drinksCategories,
@@ -120,16 +183,26 @@ function RecipeProvider({ children }) {
     mealsRecipes,
     drinksRecipes,
     showSearchBar,
+    recipeInProgress,
+    loading,
+    recipeID,
+    recipesDb,
+    ID,
+    handleCategorySelected,
     handleClick,
     handleInputChange,
     handleRadioChange,
     setLocationName,
     handleSearchButtonClick,
-    loading,
+    setRecipeInProgress,
     setLoading,
+    setRecipeID,
+    setID,
+    handleAllCategory,
+    setRecipesDb,
   };
-
-  console.log(mealsRecipes);
+  console.log(('mealRecipes :'), mealsRecipes);
+  console.log(('searchIngredients :'), searchIngredients);
   console.log(loading);
 
   return (

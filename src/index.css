@@ -10,9 +10,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+header {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 button {
@@ -22,4 +24,24 @@ button {
 button:disabled {
   background-color: rgb(209, 209, 209);
   color: rgb(144, 144, 144);
+}
+
+img {
+  max-width: 80vw;
+}
+
+footer {
+  background: rgb(144, 144, 144);
+  bottom: 0;
+  position: fixed;
+  width: 100vw;
+}
+
+footer > button {
+  margin: auto 0;
+}
+
+.btn-start-recipe {
+  position: fixed;
+  bottom: 0;
 }

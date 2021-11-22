@@ -13,12 +13,15 @@ const BASE_URL_ALL_INGREDIENTS_COCKTAIL = 'https://www.thecocktaildb.com/api/jso
 
 const SEARCH_FOR_INGREDIENT_MEAL = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
 const SEARCH_FOR_NAME_MEAL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const SEARCH_FOR_CATEGORY_MEAL = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+
 const SEARCH_FOR_FIRST_LETTER_MEAL = 'https://www.themealdb.com/api/json/v1/1/search.php?f=';
 
 // Drinks search endpoints
 const SEARCH_FOR_NAME_COCKTAIL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 const SEARCH_FOR_INGREDIENT_COCKTAIL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
 const SEARCH_FOR_FIRST_LETTER_COCKTAIL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=';
+const SEARCH_FOR_CATEGORY_COCKTAIL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 
 // List of all async API requests
 
@@ -74,6 +77,19 @@ export const getRecipeByIngredient = async (type, ingredientName) => {
     const results = await fetch(SEARCH_FOR_INGREDIENT_MEAL + ingredientName);
     const response = await results.json();
     return response.meals;
+  }
+};
+
+export const getRecipeByCategory = async (type, categoryName) => {
+  if (type === 'comidas') {
+    const results = await fetch(SEARCH_FOR_CATEGORY_MEAL + categoryName);
+    const response = await results.json();
+    return response.meals;
+  }
+  if (type === 'bebidas') {
+    const results = await fetch(SEARCH_FOR_CATEGORY_COCKTAIL + categoryName);
+    const response = await results.json();
+    return response.drinks;
   }
 };
 

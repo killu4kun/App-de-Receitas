@@ -4,16 +4,20 @@ import RecipeContext from '../context/RecipeContext';
 import EachCard from './EachCard';
 
 function EveryDrinkCard() {
-  const { drinksRecipes: { drinks } } = useContext(RecipeContext);
-
+  const { drinksRecipes: { drinks }, searchIngredients,
+    filteredCategory } = useContext(RecipeContext);
   const maxResults = 12;
-  if (!drinks) {
-    global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    return <p>Nenhum resultado encontrado</p>;
+  if (searchIngredients === null || searchIngredients === undefined) {
+    return global
+      .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   }
+  const everyRecipeSearched = (searchIngredients).slice(0, maxResults);
+  const everyRecipeByCategory = filteredCategory === null || filteredCategory.length === 0
+    ? [] : (filteredCategory).slice(0, maxResults);
   const everyRecipe = Object.values(drinks).slice(0, maxResults);
-  const everyCard = everyRecipe
-    .map((recipe, index) => (
+  console.log(('abc'), everyRecipe);
+  const mapingCards = (param) => (
+    param.map((recipe, index) => (
       <div
         className="every-card"
         data-testid={ `${index}-recipe-card` }
@@ -28,12 +32,33 @@ function EveryDrinkCard() {
             data-testid={ `${index}-recipe-card` }
           />
         </Link>
-      </div>));
+      </div>))
+  );
+
+  if (everyRecipeSearched.length > 0) {
+    return (
+      <div
+        className="div-cards"
+      >
+        { mapingCards(everyRecipeSearched) }
+      </div>
+    );
+  }
+
+  if (everyRecipeByCategory.length > 0) {
+    return (
+      <div
+        className="div-cards"
+      >
+        { mapingCards(everyRecipeByCategory) }
+      </div>
+    );
+  }
   return (
     <div
       className="div-cards"
     >
-      { everyCard }
+      { mapingCards(everyRecipe) }
     </div>
   );
 }
