@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import RecipeContext from '../context/RecipeContext';

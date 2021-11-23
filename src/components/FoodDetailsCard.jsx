@@ -2,10 +2,8 @@
 // pegar os dados e renderizar atraves da conexão de components e o estado global
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Card,
+import {
   Carousel,
-  Button,
-  ListGroup,
   Spinner } from 'react-bootstrap';
 import {
   favoritedItem,
@@ -95,34 +93,26 @@ function FoodDetailCard() {
   }
 
   return (
-    <Card className="container-fluid">
-      <img
-        className="img-fluid"
-        data-testid="recipe-photo"
-        src={ recipeID.strMealThumb }
-        alt={ recipeID.strMeal }
-      />
-      <section className="d-block pt-3 justify-content-center">
-        <h6 className="align-center">Hoje vamos preparar: </h6>
+    <div>
+      <div>
+        <img
+          data-testid="recipe-photo"
+          src={ recipeID.strMealThumb }
+          alt={ recipeID.strMeal }
+        />
+      </div>
+      <div>
         <h2 data-testid="recipe-title">{ recipeID.strMeal }</h2>
-        <h6 className="" data-testid="recipe-category">
-          <small className="text-muted">Categoria:</small>
-          {' '}
-          { recipeID.strCategory }
-        </h6>
-        <div className="d-flex justify-content-end">
-          <Button
-            variant="light"
+        <div>
+          <button
             type="button"
             data-testid="share-btn"
             onClick={ ({ target }) => handleToShareBtn(target, ID, 'comida') }
             text="Compartilhar receita"
           >
             <img src={ ShareIcon } alt="compartilhar" />
-          </Button>
-          <Button
-            variant="light"
-            style={ { cursor: 'pointer' } }
+          </button>
+          <button
             type="button"
             data-testid="favorite-btn"
             onClick={ () => handleFavoritedBtn(recipeID, ID, 'comida', setHeartChange) }
@@ -131,19 +121,21 @@ function FoodDetailCard() {
             alt="favoritar"
           >
             <img src={ favorited ? BlackHeart : WhiteHeart } alt="favoritar" />
-          </Button>
+          </button>
         </div>
-        <section>
+        <h5 data-testid="recipe-category">{ recipeID.strCategory }</h5>
+        <div />
+        <div>
           {allIngredientsMeasures.length >= 1 ? (
             allIngredientsMeasures.map((ingredient, index) => (
-              <ListGroup variant="flush" key={ index }>
-                <ListGroup.Item data-testid={ `${index}-ingredient-name-and-measure` }>
+              <div key={ index }>
+                <p data-testid={ `${index}-ingredient-name-and-measure` }>
                   { `${ingredient.ingredient} - ${ingredient.measure}` }
-                </ListGroup.Item>
-              </ListGroup>
+                </p>
+              </div>
             ))
-          ) : <Spinner animation="grow" variant="warning">Loading...</Spinner>}
-        </section>
+          ) : <p>Loading...</p>}
+        </div>
         <div>
           <p data-testid="instructions">
             {recipeID.strInstructions}
@@ -182,17 +174,19 @@ function FoodDetailCard() {
             ) : <Spinner animation="grow" variant="warning">Loading...</Spinner>}
           </Carousel>
         </div>
-        <section>
-          <Button
+        <div>
+          <button
             type="button"
+            className="btn-start-recipe"
+            style={ { position: 'fixed' } }
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >
             { text }
-          </Button>
-        </section>
-      </section>
-    </Card>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

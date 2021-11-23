@@ -12,8 +12,8 @@ function SearchBar() {
   useEffect(() => {
     setLocationName(locationRoute);
   }, []);
-  
-​  return (
+
+  return (
     <>
       <Input
         type="text"
@@ -57,8 +57,6 @@ function SearchBar() {
         dataTestId="exec-search-btn"
       />
     </>
-​
   );
 }
-​
 export default SearchBar;

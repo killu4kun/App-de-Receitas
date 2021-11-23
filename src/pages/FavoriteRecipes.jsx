@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/RecipeContext';
 import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
+import Header from '../components/Header';
 
 function FavoriteRecipes() {
   const { setDoneRecipesFilter } = useContext(Context);
@@ -20,7 +21,7 @@ function FavoriteRecipes() {
   return (
     <div>
       <div>
-        <h1> Favorite Recipes </h1>
+        <Header title="Receitas Favoritas" showSearch={ false } />
         <button
           type="button"
           data-testid="filter-by-all-btn"
