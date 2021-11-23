@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // import { isArray } from 'lodash-es';
+import { Carousel, Spinner } from 'react-bootstrap';
 import {
   favoritedItem,
   handleToShareBtn,
@@ -136,31 +137,39 @@ function DrinkDetailsCard() {
         </div>
         <div>
           <h2 data-testid="0-recomendation-title">Recomendadas</h2>
-          {recommendations.length > 1 ? (
-            recommendations.map((recommended, index) => (
-              index < SIX ? (
-                <div data-testid={ `${index}-recomendation-card` } key={ index }>
-                  <div>
+          <Carousel
+            fade
+            className="d-block w-100"
+          >
+            {recommendations.length > 1 ? (
+              recommendations.map((recommended, index) => (
+                index < SIX ? (
+                  <Carousel.Item
+                    data-testid={ `${index}-recomendation-card` }
+                    key={ index }
+                  >
                     <img
+                      className="d-block w-100"
                       src={ recommended.strMealThumb }
                       alt={ recommended.strMeal }
                     />
-                  </div>
-                  <div>
-                    <p>{ recommended.strCategory }</p>
-                    <p data-testid={ `${index}-recomendation-title` }>
-                      {recommended.strMeal}
-                    </p>
-                  </div>
-                </div>
-              ) : null
-            ))
-          ) : <p>Loading...</p>}
+                    <Carousel.Caption>
+                      <h3>{ recommended.strCategory }</h3>
+                      <p data-testid={ `${index}-recomendation-title` }>
+                        { recommended.strMeal }
+                      </p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ) : null
+              ))
+            ) : <Spinner animation="grow" variant="warning">Loading...</Spinner>}
+          </Carousel>
         </div>
         <div>
           <button
             type="button"
             className="btn-start-recipe"
+            style={ { position: 'fixed' } }
             data-testid="start-recipe-btn"
             onClick={ () => handleStartRecipe() }
           >

@@ -19,7 +19,6 @@ function FoodInProgress() {
   const { pathname } = useLocation();
   const regex = /\d+/g;
   const [locationID] = pathname.match(regex);
-  console.log(locationID);
   useEffect(() => {
     setFavorited(favoritedItem(locationID));
   }, [heartChange, locationID]);
@@ -102,7 +101,6 @@ function FoodInProgress() {
     </>
   );
   // text-decoration: line-through;
-  console.log(currentRecipe);
   return (
     <div>
       {Object.values(currentRecipe).length === 0

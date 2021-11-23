@@ -20,9 +20,11 @@ function DoneRecipeCards() {
   const [doneRecipesLocalStorage, setDoneRecipesLocalStorage] = useState([]);
 
   useEffect(() => {
-    const receveLocalStorage = localStorage.getItem('doneRecipes');
-    const done = JSON.parse(receveLocalStorage);
-    setDoneRecipesLocalStorage(done);
+    if (localStorage.getItem('doneRecipes')) {
+      const receveLocalStorage = localStorage.getItem('doneRecipes');
+      const done = JSON.parse(receveLocalStorage);
+      setDoneRecipesLocalStorage(done);
+    }
   }, []);
   const { doneRecipesFilter } = useContext(Context); // doneRecipesFilter é o esatdo para armazenar os tipos de filtro
   // o estado de doneRecipesFilter vai ser definido no clique da página de receitas prontas (/pages/DoneRecipes)
