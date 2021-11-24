@@ -3,10 +3,11 @@ import { useHistory } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { getRecipeByIngredient } from '../services/recipesRequest';
 
 function ExploreDrinkIngredients() {
   const [ingredients, setIngredients] = useState([]);
-  const { setRecipesDb } = useContext(RecipeContext);
+  const { setSearchIngredients } = useContext(RecipeContext);
   const history = useHistory();
   const limits = 12;
 
@@ -19,11 +20,11 @@ function ExploreDrinkIngredients() {
     getIngredients();
   }, []);
 
-  async function getDrinksFromIngredients(param) {
-    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${param}`);
-    const data = await response.json();
-    return setRecipesDb(data.drinks);
+  async function handleClick(ingredient) {
+    setSearchIngredients(await getRecipeByIngredient('bebidas', ingredient));
+    history.push('/bebidas');
   }
+
   return (
     <div>
       <Header title="Explorar Ingredientes" showSearch={ false } />
@@ -34,11 +35,7 @@ function ExploreDrinkIngredients() {
               <button
                 name={ drink.strIngredient1 }
                 type="button"
-                onClick={ ({ target }) => {
-                  getDrinksFromIngredients(target.name);
-                  console.log(target.name);
-                  return history.push('/bebidas');
-                } }
+                onClick={ ({ target: { name } }) => handleClick(name) }
               >
                 <div className="card-style">
                   <div className="card-img" data-testid={ `${index}-ingredient-card` }>

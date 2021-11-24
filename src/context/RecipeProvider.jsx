@@ -191,6 +191,7 @@ function RecipeProvider({ children }) {
     recipeID,
     recipesDb,
     ID,
+    setSearchIngredients,
     handleCategorySelected,
     handleClick,
     handleInputChange,

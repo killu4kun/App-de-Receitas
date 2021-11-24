@@ -3,10 +3,11 @@ import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeContext from '../context/RecipeContext';
+import { getRecipeByIngredient } from '../services/recipesRequest';
 
 function ExploreFoodIngredients() {
   const [ingredients, setIngredients] = useState([]);
-  const { setUrlFoods } = useContext(RecipeContext);
+  const { setSearchIngredients } = useContext(RecipeContext);
   const history = useHistory();
   const limits = 12;
 
@@ -20,8 +21,8 @@ function ExploreFoodIngredients() {
     getFoodIngredients();
   }, []);
 
-  function handleClick(ingredient) {
-    setUrlFoods(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+  async function handleClick(ingredient) {
+    setSearchIngredients(await getRecipeByIngredient('comidas', ingredient));
     history.push('/comidas');
   }
   return (
